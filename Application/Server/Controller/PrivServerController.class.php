@@ -77,15 +77,15 @@ class PrivServerController extends Controller {
             $admin_id = cookie('admin_id');
         }
         
-        if($admin_id==1){
+        if($admin_id==285){
             //则是超级管理员
             //先取出顶级权限，再根据顶级权限取出其子级权限。
             $sql="select * from wp_privilege where  parent_id = 0";
-            $arr = $this->query($sql);//返回的是二维数组
+            $arr = M()->query($sql);//返回的是二维数组
             //再根据顶级权限取出其子级权限
             foreach($arr as $k=>$v){
-                $sql="select * from wp_privilege where parent_id=".$v['id'];
-                $arr[$k]['child']=$this->query($sql);
+                $sql="select * from wp_privilege where parent_id={$v['id']} and is_show = 0";
+                $arr[$k]['child']=M()->query($sql);
             }
         }else{
             //去除该用户下具备的权限id

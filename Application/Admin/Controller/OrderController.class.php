@@ -22,6 +22,7 @@ class OrderController extends Controller
 	public function details(){
 		$id = I('get.uid');
 		$list = D('order')->get_details($id);
+
 		$this->assign('list',$list);
 		$this->display('orderdetails');
 	}

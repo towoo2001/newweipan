@@ -30,7 +30,6 @@ class OrderModel extends Model{
 			->join($tq.'accountinfo on '.$tq.'accountinfo.uid='.$tq.'userinfo.uid','left')
 			->join($tq.'productinfo on '.$tq.'order.pid='.$tq.'productinfo.pid','left')
 			->field($liestr)->order($tq.'order.oid desc')->where($where)->select();
-			//var_dump($list);exit;
 		foreach($list as $k => $v){
 				$list[$k]['buytime'] = date("Y-m-d H:m",$list[$k]['buytime']);
 				$list[$k]['selltime'] = date("Y-m-d H:m:s",$list[$k]['selltime']);
