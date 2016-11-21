@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -11,10 +11,9 @@
     <script src="__PUBLIC__/Admin/js/jquery/jQuery-2.2.0.min.js"></script>
     <script src="__PUBLIC__/Admin/js/charts/Chart.js"></script>
     <style type="text/css">
-			td{ border:1px solid #ccc; background:#fff; line-height:28px; padding:10px;}
+			td{ border:1px solid #ccc; background:#fff;}
 			th{background:#fff;}
-			input{ width:250px;}
-			select{line-height:30px; height:30px;}
+			.add{ padding:0 20px; font-weight:bload;}
 	</style>
     
 </head>
@@ -23,48 +22,39 @@
         <div class="rows" style="margin-bottom: 0.8%; overflow: hidden;">
             <div style="float: left; width: 100%;">
                 <div style="height: 100%; border: 1px solid #e6e6e6; overflow: hidden;">
-                    <form name="form1" action="__ACTION__" method="post">
-                    <table style="background:#fff;width: 100%" >
+                    <table class="table table-hover">
+                    <thead>
+                    		<tr>
+                    			<td colspan="4"><span class="add"><a href="<?php echo U('Privilege/addRole')?>">添加角色</a></span></td>
+                    		</tr>
+                        
+                            <tr>
+                                <th>
+                                    <span class="line"></span>角色名称
+                                </th>
+                                <th>
+                                    <span class="line"></span>具备权限
+                                </th>
+                                
+                                <th>操作</th>
+                                
+                            </tr>
+                        </thead>
+ 
                         <tbody>
-                              
-                              <tr>
-                              		<td width="10%">权限名称</td>
-                              		<td align="left"><input type="text" name="privilege_name"></td>
-                              </tr>
-                              
-                              <tr>
-                              		<td width="10%">顶级栏目</td>
-                              		<td align="left">
-                              			<select name="parent_id">
-                              				<option value="0">选择顶级栏目</option>
-                              			<?php foreach($list as $v){?>
-                              				<option value="<?php echo $v['id']?>"><?php echo str_repeat('&nbsp;',$v['deep']*4).$v['privilege_name']?></option>
-                              			<?php } ?>
-                              			</select>
-                              		</td>
-                              </tr>
-                              
-                              <tr>
-                              		<td width="10%">访问地址</td>
-                              		<td align="left"><input type="text" name="privilege_url"></td>
-                              </tr>
-                              
-                              <tr>
-                              		<td width="10%">排序</td>
-                              		<td align="left"><input type="text" name="order"></td>
-                              </tr>
-                              
-                              <tr>
-                              		
-                              		<td  align="left" colspan="2">
-                              		<input type="hidden" name="token" value="<?php echo $_SESSION['token']?>">
-                              		<input type="submit" value="提交">
-                              		</td>
-                              </tr>
-                   
-                   </tbody>       
-            </table>
- </form>
+                        <?php foreach($list as $v){?>
+                        <tr>
+                       		<td width="100"><?php echo $v['role_name']?></td>
+                       		<td><?php echo $v['privilegelist']?></td> 
+                       		<td align="center">
+                       		 <a href="<?php echo U('Privilege/editRole',array('id'=>$v['id']))?>">编辑</a>/
+                                <a href="<?php echo U('Privilege/delRole',array('id'=>$v['id']))?>">删除</a>
+                       		</td>
+                       </tr>
+                       
+                          <?php } ?>              
+                        </tbody>
+                    </table>
                     
                    
                 </div>
@@ -190,21 +180,5 @@
                             padding-right: 5px;
                         }
     </style>
-</body>
-</html>
-
-
-
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-
-
 </body>
 </html>

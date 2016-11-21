@@ -61,10 +61,9 @@
                             </td>                            
 
                             <td align="center">
-                                <a href="{:U('Super/sedit',array('uid'=>$ult['uid']))}">编辑</a>/
+                                <a href="<?php echo U('Privilege/editPrivilege',array('id'=>$v['id']))?>">编辑</a>/
                                 <a href="<?php echo U('Privilege/delPrivilege',array('id'=>$v['id']))?>">删除</a>
-                                    
-                                 
+       
                             </td>
                         </tr>
                         <?php } ?>

@@ -13,8 +13,9 @@
     <style type="text/css">
 			td{ border:1px solid #ccc; background:#fff; line-height:28px; padding:10px;}
 			th{background:#fff;}
-			input{ width:250px;}
+			input[type=text]{ width:250px;}
 			select{line-height:30px; height:30px;}
+			.checkbox, .radio{display:inline;padding:0;}
 	</style>
     
 </head>
@@ -28,38 +29,33 @@
                         <tbody>
                               
                               <tr>
-                              		<td width="10%">权限名称</td>
-                              		<td align="left"><input type="text" name="privilege_name"></td>
+                              		<td width="10%">角色名称</td>
+                              		<td align="left"><input type="text" name="rowname"></td>
                               </tr>
                               
                               <tr>
-                              		<td width="10%">顶级栏目</td>
-                              		<td align="left">
-                              			<select name="parent_id">
-                              				<option value="0">选择顶级栏目</option>
-                              			<?php foreach($list as $v){?>
-                              				<option value="<?php echo $v['id']?>"><?php echo str_repeat('&nbsp;',$v['deep']*4).$v['privilege_name']?></option>
-                              			<?php } ?>
-                              			</select>
+                              <td align="left" colspan="2">
+                              			<?php
+	                    foreach($list as $k=>$v){
+                        if($v['parent_id']==0){
+                            echo '<div style="padding-top:12px;"><span style="font-weight:bold">
+								<input type="checkbox" name="priv_id[]" value="'.$v['id'].'"  class="pre'.$v['id'].'">'.$v['privilege_name'].'</span>
+								<div style="clear:both;"></div>';
+                            continue;
+                         }
+                    ?>
+	                            <span style='line-height:35px;'>
+	                                <?php echo str_repeat('&nbsp;',$v['deep']*4)?>
+	                                	<input type="checkbox" name="priv_id[]" value="<?php echo $v['id']?>"  onclick="getPre(<?php echo $v['parent_id']?>)"/>
+	                                <?php echo $v['privilege_name']?>
+	                            </span>
+	                    <?php  }?>
                               		</td>
-                              </tr>
-                              
-                              <tr>
-                              		<td width="10%">访问地址</td>
-                              		<td align="left"><input type="text" name="privilege_url"></td>
-                              </tr>
-                              
-                              <tr>
-                              		<td width="10%">排序</td>
-                              		<td align="left"><input type="text" name="order"></td>
                               </tr>
                               
                               <tr>
                               		
-                              		<td  align="left" colspan="2">
-                              		<input type="hidden" name="token" value="<?php echo $_SESSION['token']?>">
-                              		<input type="submit" value="提交">
-                              		</td>
+                              		<td  align="left" colspan="2"><input type="submit" value="提交"></td>
                               </tr>
                    
                    </tbody>       
@@ -192,7 +188,12 @@
     </style>
 </body>
 </html>
+<script>
+ function getPre(id){
+	 $(".pre"+id).attr("checked","checked"); 
+ }
 
+</script>
 
 
 
