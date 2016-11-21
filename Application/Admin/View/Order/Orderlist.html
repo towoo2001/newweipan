@@ -95,13 +95,16 @@
 <body>
     <div id="areascontent">
         <div class="rows" style="margin-bottom: 0.8%; overflow: hidden;">
-                <form id="form1" action="__URL__/Orderlist" method="get">
+                <form id="form1" action="__URL__/Orderlist" method="post">
                 <h3 style="height:40px;width: 100%">订单流水</h3>
                     <div class="tpsearch" >
                         订单编号：<input type="text" class="span6 search" placeholder="请输入订单编号查找..." name="orderno" id="orderno"/>
                     </div>
                     <div class="tpsearch" >
                         用户名称：<input type="text" value="{$sea.username}" class="span6 search" placeholder="请输入用户名称查找..." name="username" id="username"/>
+                    </div>
+                    <div class="tpsearch" >
+                        用户id：<input type="text" value="{$sea.uid}" class="span6 search" placeholder="请输入用户id称查找..." name="uid" id="uid"/>
                     </div>
                 
                 <div class="span10 pull-left" style="margin-top: 20px;">
@@ -129,6 +132,7 @@
                                     
                                 </select>
                     </div>
+
                 </div>
                 <div class="span10 pull-left" style="margin-top: 20px;">
                     <a href="javascript:void(0)"  onclick="javascript:$('#form1').submit();">开始查找</a>
