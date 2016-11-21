@@ -11,8 +11,9 @@
     <script src="__PUBLIC__/Admin/js/jquery/jQuery-2.2.0.min.js"></script>
     <script src="__PUBLIC__/Admin/js/charts/Chart.js"></script>
     <style type="text/css">
-            td{ border:1px solid #ccc; background:#fff;}
+            td{ border:1px solid #ccc; background:#fff;text-align:center;}
             th{background:#fff;}
+
             .add{ padding:0 20px; font-weight:bload;}
     </style>
     <script>
@@ -135,7 +136,7 @@
                     <!-- <a href="javascript:void(0)"  onclick="sub()">查找导出</a> -->
                 </div>
                 </form>
-            <table class="table table-hover">
+            <table class="table table-hover" style='width: 400px'>
                     <thead>
                             <tr>
                                 <td colspan="15"><!-- <span class="add"><a href="<?php echo U('Privilege/addPrivilege')?>">添加权限</a></span> --></td>
@@ -143,116 +144,90 @@
                         
                             <tr>
                                 <th>
-                                    <span class="line"></span>结算日期
+                                    <span class="line"></span>持仓单号
                                 </th>
+                                <td ><?php echo $list['orderno']?> </td>
+                            </tr>
+                            <tr>
                                 <th>
-                                    <span class="line"></span>用户id
+                                    <span class="line"></span>下单商品
                                 </th>
-                                <th>
-                                    <span class="line"></span>用户姓名
-                                </th>
-                
-                                <th>
-                                    <span class="line"></span>手机号码
-                                </th>
-                                <th>
-                                    <span class="line"></span>仓单号
-                                </th>
-                                <th>
-                                    <span class="line"></span>商品名
-                                </th>
+                                <td ><?php echo $list['ptitle']?> </td>
+                            </tr>
+                            <tr>
                                 <th>
                                     <span class="line"></span>持仓数量
                                 </th>
-                                <th>
-                                    <span class="line"></span>支付方式
-                                </th>
-                
+                                <td ><?php echo $list['onumber']?> </td>
+                            </tr>
+                            <tr>
                                 <th>
                                     <span class="line"></span>交易方向
                                 </th>
+                                <td ><?php if($list['ostyle']==0) echo '做多';else echo '做空';?> </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <span class="line"></span>支付方式
+                                </th>
+                                <td style='color: red'>支付方式</td>
+                            </tr>
+                            <tr>
                                 <th>
                                     <span class="line"></span>建仓时间
                                 </th>
+                                <td ><?php echo $list['buytime']?> </td>
+                            </tr>
+                            <tr>
                                 <th>
-                                    <span class="line"></span>建仓价
+                                    <span class="line"></span>建仓价格
                                 </th>
-                
+                                <td ><?php echo $list['buyprice']?> </td>
+                            </tr>
+                            <tr>
                                 <th>
                                     <span class="line"></span>建仓点位
                                 </th>
+                                <td style="color: red">大盘点数</td>
+                            </tr>
+                            <tr>
                                 <th>
-                                    <span class="line"></span>浮动盈亏
+                                    <span class="line"></span>止盈点位
                                 </th>
+                                <td ><?php echo $list['endprofit']?> </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <span class="line"></span>止损点位
+                                </th>
+                                <td ><?php echo $list['endprofit']?> </td>
+                            </tr>
+                            <tr>
                                 <th>
                                     <span class="line"></span>手续费
                                 </th>
-                
+                                <td ><?php echo $list['fee']?> </td>
+                            </tr>
+                            <tr>
                                 <th>
-                                    <span class="line"></span>操作
+                                    <span class="line"></span>会员单位手续费
                                 </th>
-                                
+                                <td style="color: red">会员单位手续费 </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <span class="line"></span>交易所手续费
+                                </th>
+                                <td style="color: red">交易所手续费 </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <span class="line"></span>客户ID
+                                </th>
+                                <td ><?php echo $list['uid']?> </td>
                             </tr>
                         </thead>
                         
-                        
-                        <tbody>
-                        
-                       <?php foreach($list as $v){?>
-                        <tr class="first">
-                            <td>
-                               <?php echo $v['selltime']?> 
-                            </td>
-                            <td align="center">
-                            <?php echo $v['uid']?>
-                            </td>
-                            <td align="center">
-                               <?php echo $v['username']?>
-                            </td>  
-                            <td align="center">
-                               <?php echo $v['utel']?>
-                            </td>  
-                             
-                            <td align="center">
-                               <?php echo $v['orderno']?>
-                            </td> 
-                            <td align="center">
-                               <?php echo $v['ptitle']?>
-                            </td>
-                            <td align="center">
-                               <?php echo $v['onumber']?>
-                            </td>
-                            <td align="center" style="color: red">
-                               支付方式
-                            </td>
-                            <td align="center">
-                               <?php if($v['ostyle']==0){echo'做多';}else{echo '做空';}?>
-                            </td>                          
-                            <td align="center">
-                               <?php echo $v['buytime']?>
-                            </td>
-                            <td align="center">
-                               <?php echo $v['buyprice']?>
-                            </td>
-                            <td align="center" style="color: red">
-                               大盘点位
-                            </td>
-                            <td align="center">
-                               <?php echo $v['ploss']?>
-                            </td>
-                            <td align="center">
-                               <?php echo $v['fee']?>
-                            </td>
-                            <td align="center">
-                                <a href="{:U('Order/',array('uid'=>$ult['uid']))}">查看</a>
-                                
-                                    
-                                 
-                            </td>
-                        </tr>
-                        <?php } ?>
-                                        
-                        </tbody>
                     </table>
 
             
