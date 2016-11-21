@@ -303,6 +303,11 @@
                 { "F_ModuleId": "2", "F_ParentId": "1",  "F_FullName": "通用字典", "F_Icon": "fa fa-book", "F_UrlAddress": "/SystemManage/DataItemDetail/Index" },
                 { "F_ModuleId": "3", "F_ParentId": "1",  "F_FullName": "工作流程", "F_Icon": "fa fa-share-alt", "F_UrlAddress": null},
                 
+                { "F_ModuleId": "4", "F_ParentId": "0",  "F_FullName": "系统设置", "F_Icon": "fa fa-coffee", "F_UrlAddress": null },
+                { "F_ModuleId": "2", "F_ParentId": "4",  "F_FullName": "权限管理", "F_Icon": "fa fa-book", "F_UrlAddress": "<?php echo U('Privilege/privilegeList')?>" },
+                { "F_ModuleId": "3", "F_ParentId": "4",  "F_FullName": "角色管理", "F_Icon": "fa fa-share-alt", "F_UrlAddress": null},
+                { "F_ModuleId": "3", "F_ParentId": "4",  "F_FullName": "管理员管理", "F_Icon": "fa fa-share-alt", "F_UrlAddress": null},
+                
                 ];
             var _html = "";
             $.each(data, function (i) {
