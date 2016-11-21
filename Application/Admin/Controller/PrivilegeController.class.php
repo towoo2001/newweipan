@@ -14,7 +14,6 @@ class PrivilegeController extends BaseController{
         if(!isset($_SESSION['token']) || $_SESSION['token']=='') {
             set_token();
         }
-        
         if(IS_POST){
             if(!valid_token()){
                 $this->error('token error，请不要重复提交！');

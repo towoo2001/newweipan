@@ -13,7 +13,7 @@
     <style type="text/css">
 			td{ border:1px solid #ccc; background:#fff; line-height:28px; padding:10px;}
 			th{background:#fff;}
-			input{ width:250px;}
+			input[type=text]{ width:250px;}
 			select{line-height:30px; height:30px;}
 	</style>
     
@@ -52,6 +52,15 @@
                               <tr>
                               		<td width="10%">排序</td>
                               		<td align="left"><input type="text" name="order"></td>
+                              </tr>
+                              
+                              <tr>
+                              		<td>是否在菜单栏显示</td>
+                              		
+                              		<td>
+                              			<input type="radio" name="is_show" checked="checked" value="0">&nbsp;&nbsp;是&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              			<input type="radio" name="is_show"  value="1">&nbsp;&nbsp;否
+                              		</td>
                               </tr>
                               
                               <tr>

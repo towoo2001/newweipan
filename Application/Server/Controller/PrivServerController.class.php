@@ -99,10 +99,11 @@ class PrivServerController extends Controller {
             
             //根据父级的id取出子集
             foreach($arr as $k=>$v){
-                $sql = "select * from wp_privilege where parent_id = {$v['id']}";
+                $sql = "select * from wp_privilege where parent_id = {$v['id']}  and is_show is null";
                 $arr[$k]['child']=M()->query($sql);
             }
         }
+       
          
         return $arr;
     }

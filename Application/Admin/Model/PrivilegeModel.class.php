@@ -25,6 +25,7 @@ class PrivilegeModel extends Model{
         $data['privilege_url'] = I('post.privilege_url');
         $data['order'] = I('post.order');
         $data['parent_id'] = I('post.parent_id');
+        $data['is_show'] = I('post.parent_id');
         empty($data['order']) ?  $data['order'] = 0 : $data['order'] = I('post.parent_id');
         return $data;
     }

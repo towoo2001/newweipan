@@ -13,7 +13,10 @@
     <style type="text/css">
 			td{ border:1px solid #ccc; background:#fff;}
 			th{background:#fff;}
-			.add{ padding:0 20px; font-weight:bload;}
+			.add{ padding:0 35px; font-weight:bload; background:url(__PUBLIC__/Admin/images/add.png) no-repeat 0 0px; display:block;}
+			.add a{line-height:35px; height:35px;  font-size:16px; font-weight:bold}
+			.add_icon{background:url(__PUBLIC__/Admin/images/add_icon.png) no-repeat 0 0px; padding:0 25px;}
+			.jian_icon{background:url(__PUBLIC__/Admin/images/jian_icon.png) no-repeat 0 0px;  margin:0 20px;}
 	</style>
     
 </head>
@@ -25,7 +28,7 @@
                     <table class="table table-hover">
                     <thead>
                     		<tr>
-                    			<td colspan="4"><span class="add"><a href="<?php echo U('Privilege/addPrivilege')?>">添加权限</a></span></td>
+                    			<td colspan="5"><span class="add"><a href="<?php echo U('Privilege/addPrivilege')?>">添加权限</a></span></td>
                     		</tr>
                         
                             <tr>
@@ -37,6 +40,10 @@
                                 </th>
                                 <th>
                                     <span class="line"></span>排序
+                                </th>
+                                
+                                <th>
+                                    <span class="line"></span>是否显示
                                 </th>
                 
                                 <th>
@@ -51,14 +58,18 @@
                        <?php foreach($list as $v){?>
                         <tr class="first">
                             <td>
-                               <?php echo str_repeat('&nbsp;',$v['deep']*6)?> <?php echo $v['privilege_name']?>
+                               <span  <?php   echo empty($v['parent_id'])? 'class="add_icon"':'class="jian_icon"'?>><?php echo str_repeat('&nbsp;',$v['deep']*6)?> <?php echo $v['privilege_name']?></span>
                             </td>
                             <td align="center">
                             <?php echo $v['privilege_url']?>
                             </td>
                             <td align="center">
                                <?php echo $v['order']?>
-                            </td>                            
+                            </td> 
+                            
+                            <td align="center">
+                               <?php echo $v['is_show'] == 0 ?'显示':'不显示'?>
+                            </td>                           
 
                             <td align="center">
                                 <a href="<?php echo U('Privilege/editPrivilege',array('id'=>$v['id']))?>">编辑</a>/
