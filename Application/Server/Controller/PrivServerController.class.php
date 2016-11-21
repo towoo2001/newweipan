@@ -89,7 +89,6 @@ class PrivServerController extends Controller {
             }
         }else{
             //去除该用户下具备的权限id
-    
             $sql = "select b.privilege_id from wp_userinfo  a left join wp_role b on otype = b.id   where a.uid = {$admin_id}"; 
             $list = M()->query($sql);
             
@@ -99,12 +98,10 @@ class PrivServerController extends Controller {
             
             //根据父级的id取出子集
             foreach($arr as $k=>$v){
-                $sql = "select * from wp_privilege where parent_id = {$v['id']}  and is_show is null";
+                $sql = "select * from wp_privilege where parent_id = {$v['id']}  and is_show = 0";
                 $arr[$k]['child']=M()->query($sql);
             }
         }
-       
-         
         return $arr;
     }
     
