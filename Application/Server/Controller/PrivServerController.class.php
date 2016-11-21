@@ -67,5 +67,45 @@ class PrivServerController extends Controller {
         return  $row;
     }
     
+    /**
+     * 去除菜单栏
+     */
+    public function getButton(){
+        //思路：根据登录管理员到id,分别获取权限按钮，要求只取出前两级的按钮。
+        $admin_id = 285;
+        if(empty($admin_id)){
+            $admin_id = cookie('admin_id');
+        }
+        
+        if($admin_id==1){
+            //则是超级管理员
+            //先取出顶级权限，再根据顶级权限取出其子级权限。
+            $sql="select * from wp_privilege where  parent_id = 0";
+            $arr = $this->query($sql);//返回的是二维数组
+            //再根据顶级权限取出其子级权限
+            foreach($arr as $k=>$v){
+                $sql="select * from wp_privilege where parent_id=".$v['id'];
+                $arr[$k]['child']=$this->query($sql);
+            }
+        }else{
+            //去除该用户下具备的权限id
+    
+            $sql = "select b.privilege_id from wp_userinfo  a left join wp_role b on otype = b.id   where a.uid = {$admin_id}"; 
+            $list = M()->query($sql);
+            
+            //取出该栏目下伏击栏目
+            $sql = "select * from (select * from wp_privilege where id in({$list[0]['privilege_id']})) a having parent_id = 0";
+            $arr = M()->query($sql);
+            
+            //根据父级的id取出子集
+            foreach($arr as $k=>$v){
+                $sql = "select * from wp_privilege where parent_id = {$v['id']}";
+                $arr[$k]['child']=M()->query($sql);
+            }
+        }
+         
+        return $arr;
+    }
+    
     
 }

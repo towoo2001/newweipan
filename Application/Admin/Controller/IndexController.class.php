@@ -3,12 +3,14 @@ namespace Admin\Controller;
 use Think\Controller;
 class IndexController extends BaseController {
     public function login(){
+        
 
         $this->display();
     }
 
     public function index(){
-        
+        $buttonList = R('Server/PrivServer/getButton');
+        $this->assign('buttonList',$buttonList);
         $this->display();
     }
     
