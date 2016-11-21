@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>后台管理系统</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="__PUBLIC__/Admin/js/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Admin/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Admin/css/index.css">
+    <script src="__PUBLIC__/Admin/js/jquery/jQuery-2.2.0.min.js"></script>
+    <script src="__PUBLIC__/Admin/js/charts/Chart.js"></script>
+    <style type="text/css">
+            td{ border:1px solid #ccc; background:#fff;}
+            th{background:#fff;}
+            .add{ padding:0 20px; font-weight:bload;}
+    </style>
+    <script>
+        $(function () {
+            Canvas1();
+            Canvas2();
+            Canvas3();
+        });
+        function Canvas1() {
+            var randomScalingFactor = function () { return Math.round(Math.random() * 100) };
+            var doughnutData = [
+                {
+                    value: randomScalingFactor(),
+                    color: "#F7464A",
+                    highlight: "#FF5A5E",
+                    label: "事假"
+                },
+                {
+                    value: randomScalingFactor(),
+                    color: "#46BFBD",
+                    highlight: "#5AD3D1",
+                    label: "病假"
+                },
+                {
+                    value: randomScalingFactor(),
+                    color: "#FDB45C",
+                    highlight: "#FFC870",
+                    label: "公休假"
+                },
+                {
+                    value: randomScalingFactor(),
+                    color: "#949FB1",
+                    highlight: "#A8B3C5",
+                    label: "调休假"
+                }
+            ];
+            var ctx = document.getElementById("Canvas1").getContext("2d");
+            window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, { responsive: false });
+        }
+        function Canvas2() {
+            var randomScalingFactor = function () { return Math.round(Math.random() * 100) };
+            var lineChartData = {
+                labels: ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
+                datasets: [
+                    {
+                        fillColor: "rgba(220,220,220,0.2)",
+                        strokeColor: "rgba(220,220,220,1)",
+                        pointColor: "rgba(220,220,220,1)",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(220,220,220,1)",
+                        data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
+                    }
+                ]
+            }
+            var ctx = document.getElementById("Canvas2").getContext("2d");
+            window.myLine = new Chart(ctx).Line(lineChartData, {
+                bezierCurve: false,
+            });
+        }
+        function Canvas3() {
+            var randomScalingFactor = function () { return Math.round(Math.random() * 100) };
+            var lineChartData = {
+                labels: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "8月", "10月", "11月", "12月"],
+                datasets: [
+                    {
+                        fillColor: "#578ebe",
+                        data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
+                    }
+                ]
+            }
+            var ctx = document.getElementById("Canvas3").getContext("2d");
+            window.myLine = new Chart(ctx).Bar(lineChartData, {
+                bezierCurve: false,
+             
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="areascontent">
+        <div class="rows" style="margin-bottom: 0.8%; overflow: hidden;">
+                <form id="form1" action="__URL__/tlist" method="get">
+                <h3 style="height:40px;width: 100%">订单流水</h3>
+                    <div class="tpsearch" >
+                        订单编号：<input type="text" class="span6 search" placeholder="请输入订单编号查找..." name="orderno" id="orderno"/>
+                    </div>
+                    <div class="tpsearch" >
+                        用户名称：<input type="text" value="{$sea.username}" class="span6 search" placeholder="请输入用户名称查找..." name="username" id="username"/>
+                    </div>
+                
+                <div class="span10 pull-left" style="margin-top: 20px;">
+                    <div class="tpsearch" style="width: 25%">
+                        订单类型：<select id="ostyle"  name="ostyle">
+                                    <option value="">默认不选</option>
+                                    <option value="0">买涨</option>
+                                    <option value="1">买跌</option>
+                                </select>
+                    </div>
+                    <div class="tpsearch" style="width: 25%">
+                        订单盈亏：<select id="ploss"  name="ploss">
+                                    <option value="">默认不选</option>
+                                    <option value="0">盈利</option>
+                                    <option value="1">亏损</option>
+                                </select>
+                    </div>
+                    <div class="tpsearch" style="width: 25%">
+                        订单状态：<select name="ostaus" id="ostaus" >
+                                    <option value="">默认不选</option>
+                                    <option value="4">建仓</option>
+                                     <option value="1">平仓</option>
+                                    <option value="2">爆仓</option>
+                                    <option value="3">隔夜利息扣除</option>
+                                    
+                                </select>
+                    </div>
+                </div>
+                <div class="span10 pull-left" style="margin-top: 20px;">
+                    <a href="javascript:void(0)"  onclick="javascript:$('#form1').submit();">开始查找</a>
+                    <!-- <a href="javascript:void(0)"  onclick="sub()">查找导出</a> -->
+                </div>
+                </form>
+            <table class="table table-hover">
+                    <thead>
+                            <tr>
+                                <td colspan="15"><!-- <span class="add"><a href="<?php echo U('Privilege/addPrivilege')?>">添加权限</a></span> --></td>
+                            </tr>
+                        
+                            <tr>
+                                <th>
+                                    <span class="line"></span>结算日期
+                                </th>
+                                <th>
+                                    <span class="line"></span>用户id
+                                </th>
+                                <th>
+                                    <span class="line"></span>用户姓名
+                                </th>
+                
+                                <th>
+                                    <span class="line"></span>经纪人/代理商名称
+                                </th>
+                                <th>
+                                    <span class="line"></span>仓单号
+                                </th>
+                                <th>
+                                    <span class="line"></span>商品名
+                                </th>
+                                <th>
+                                    <span class="line"></span>成交数量
+                                </th>
+                                <th>
+                                    <span class="line"></span>支付方式
+                                </th>
+                
+                                <th>
+                                    <span class="line"></span>交易方向
+                                </th>
+                                <th>
+                                    <span class="line"></span>建仓时间
+                                </th>
+                                <th>
+                                    <span class="line"></span>建仓价
+                                </th>
+                
+                                <th>
+                                    <span class="line"></span>建仓点位
+                                </th>
+                                <th>
+                                    <span class="line"></span>平仓点位
+                                </th>
+                                <th>
+                                    <span class="line"></span>平仓时间
+                                </th>
+                                <th>
+                                    <span class="line"></span>平仓类型
+                                </th>
+                                <th>
+                                    <span class="line"></span>平仓盈亏
+                                </th>
+                                <th>
+                                    <span class="line"></span>手续费
+                                </th>
+                
+                                <th>
+                                    <span class="line"></span>操作
+                                </th>
+                                
+                            </tr>
+                        </thead>
+                        
+                        
+                        <tbody>
+                        
+                       <?php foreach($list as $v){?>
+                        <tr class="first">
+                            <td>
+                               <?php echo $v['selltime']?> 
+                            </td>
+                            <td align="center">
+                            <?php echo $v['uid']?>
+                            </td>
+                            <td align="center">
+                               <?php echo $v['username']?>
+                            </td>  
+                            <td align="center" style="color: red">
+                               经纪人/代理商名称
+                            </td>  
+                             
+                            <td align="center">
+                               <?php echo $v['orderno']?>
+                            </td> 
+                            <td align="center">
+                               <?php echo $v['ptitle']?>
+                            </td>
+                            <td align="center">
+                               <?php echo $v['onumber']?>
+                            </td>
+                            <td align="center" style="color: red">
+                               支付方式
+                            </td>
+                            <td align="center">
+                               <?php if($v['ostyle']==0){echo'做多';}else{echo '做空';}?>
+                            </td>                          
+                            <td align="center">
+                               <?php echo $v['buytime']?>
+                            </td>
+                            <td align="center">
+                               <?php echo $v['buyprice']?>
+                            </td>
+                            <td align="center" style="color: red">
+                               建仓大盘点位
+                            </td>
+                            <td align="center" style="color: red">
+                               平仓大盘点位
+                            </td>
+                            <td align="center">
+                               <?php echo $v['selltime']?>
+                            </td>
+                            <td align="center" style="color: red">
+                               平仓类型
+                            </td>
+                            <td align="center">
+                               <?php echo $v['ploss']?>
+                            </td>
+                            <td align="center">
+                               <?php echo $v['fee']?>
+                            </td>
+                            <td align="center">
+                                <a href="{:U('Order/odetails',array('uid'=>$v['uid']))}">查看</a>
+                                
+                                    
+                                 
+                            </td>
+                        </tr>
+                        <?php } ?>
+                                        
+                        </tbody>
+                    </table>
+
+            
+
+        </div>
+
+
+        <div class="rows" style="overflow: hidden;">
+
+
+
+        </div>
+    </div>
+   
+</body>
+<script type="text/javascript">
+function{
+ $('#form1').submit();   
+}
+
+</script>
+</html>

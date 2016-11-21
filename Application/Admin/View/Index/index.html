@@ -406,15 +406,14 @@
             },
             loadMenu: function () {
                 var data = [
-                    { "F_ModuleId": "5", "F_ParentId": "0",  "F_FullName": "用户管理", "F_Icon": "fa fa-book", "F_UrlAddress": null },
-                    { "F_ModuleId": "6", "F_ParentId": "5",  "F_FullName": "用户列表", "F_Icon": "fa fa-book", "F_UrlAddress": "<?php echo U('User/index')?>"},
-                    { "F_ModuleId": "7", "F_ParentId": "5",  "F_FullName": "添加会员", "F_Icon": "fa fa-book", "F_UrlAddress": "<?php echo U('User/create')?>" },
-                    { "F_ModuleId": "1", "F_ParentId": "0",  "F_FullName": "系统设置", "F_Icon": "fa fa-coffee", "F_UrlAddress": null },
-                    { "F_ModuleId": "2", "F_ParentId": "1",  "F_FullName": "权限管理", "F_Icon": "fa fa-book", "F_UrlAddress": "<?php echo U('Privilege/privilegeList')?>" },
-                    { "F_ModuleId": "3", "F_ParentId": "1",  "F_FullName": "角色管理", "F_Icon": "fa fa-share-alt", "F_UrlAddress": null},
-                    { "F_ModuleId": "4", "F_ParentId": "1",  "F_FullName": "管理员管理", "F_Icon": "fa fa-share-alt", "F_UrlAddress": null},
+                    <?php foreach($buttonList as $v){?>        
+                    { "F_ModuleId": "<?php echo $v['id']?>", "F_ParentId": "0",  "F_FullName": "<?php echo $v['privilege_name']?>", "F_Icon": "fa fa-coffee", "F_UrlAddress": null },
+                   		 <?php foreach($v['child'] as $v1){  ?>
+                    		{ "F_ModuleId": "2", "F_ParentId": "<?php echo $v1['parent_id']?>",  "F_FullName": "<?php echo $v1['privilege_name']?>", "F_Icon": "fa fa-book", "F_UrlAddress": "<?php echo U($v1['privilege_url'])?>" },
+                    	<?php  } ?>
+                    <?php  } ?>
+                    ];
 
-                ];
                 var _html = "";
                 $.each(data, function (i) {
                     var row = data[i];

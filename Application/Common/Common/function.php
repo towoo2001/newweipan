@@ -43,3 +43,21 @@ function _infinite($list,$parent_id=0,$deep=0){
     return $arr;
 
 }
+
+
+/**
+ * 设置一个令牌
+ */
+function set_token() {
+    $_SESSION['token'] = md5(microtime(true));
+}
+
+/**
+ * 验证令牌
+ * @return boolean
+ */
+function valid_token() {
+    $return = $_REQUEST['token'] === $_SESSION['token'] ? true : false;
+    set_token();
+    return $return;
+}

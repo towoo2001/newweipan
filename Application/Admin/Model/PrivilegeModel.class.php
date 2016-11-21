@@ -10,6 +10,8 @@ class PrivilegeModel extends Model{
         array('privilege_name','require','权限名称不能为空'),
         array('parent_id','number','上级权限必须是数字')
     );
+    
+    
     /**
      * 获取列表数据
      */
@@ -23,7 +25,14 @@ class PrivilegeModel extends Model{
         $data['privilege_url'] = I('post.privilege_url');
         $data['order'] = I('post.order');
         $data['parent_id'] = I('post.parent_id');
+        $data['is_show'] = I('post.parent_id');
         empty($data['order']) ?  $data['order'] = 0 : $data['order'] = I('post.parent_id');
         return $data;
     }
+    
+   
+    
+    
+    
+
 }
