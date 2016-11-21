@@ -27,8 +27,9 @@
         </h2>
 		<!-- LOGIN WRAPPER  -->
         <div class="login-wrap">
-          <input type="text" class="form-control" placeholder="User ID" autofocus>
-          <input type="password" class="form-control" placeholder="Password">
+          <form action="{:U('Index/login')}" enctype="multipart/form-data" method="post" id='LOGIN'>
+          <input type="text" class="form-control" name="username" placeholder="User ID" autofocus>
+          <input type="password" class="form-control" name="password" placeholder="Password">
           <label class="checkbox">
             <input type="checkbox" value="remember-me">
             Remember me
@@ -56,12 +57,13 @@
               Twitter
             </a>
           </div>-->
-          <div class="registration">
+          <!--<div class="registration">
             Don't have an account yet?
             <a class="" href="registration.html">
               Create an account
             </a>
-          </div>
+          </div>-->
+          </form>
         </div>
 		<!-- END LOGIN WRAPPER -->
 		<!-- MODAL -->
