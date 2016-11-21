@@ -77,11 +77,6 @@
                 <nav class="page-tabs menuTabs">
                     <div class="page-tabs-content" style="margin-left: 0px;">
                         <a href="javascript:;" class="menuTab active" data-id="/Home/Default">欢迎首页</a>
-                        <!--<a href="javascript:;" class="menuTab" data-id="/Home/About" style="padding-right: 15px;">平台介绍</a>-->
-                        <!--<a href="javascript:;" class="menuTab" data-id="/SystemManage/Organize/Index">机构管理 <i class="fa fa-remove"></i></a>
-                        <a href="javascript:;" class="menuTab" data-id="/SystemManage/Role/Index">角色管理 <i class="fa fa-remove"></i></a>
-                        <a href="javascript:;" class="menuTab" data-id="/SystemManage/Duty/Index">岗位管理 <i class="fa fa-remove"></i></a>
-                        <a href="javascript:;" class="menuTab" data-id="/SystemManage/User/Index">用户管理 <i class="fa fa-remove"></i></a>-->
                     </div>
                 </nav>
                 <button class="roll-nav roll-right tabRight" id="go">
@@ -411,16 +406,15 @@
             },
             loadMenu: function () {
                 var data = [
-                    { "F_ModuleId": "1", "F_ParentId": "0",  "F_FullName": "单位组织", "F_Icon": "fa fa-coffee", "F_UrlAddress": null },
-                    { "F_ModuleId": "2", "F_ParentId": "1",  "F_FullName": "通用字典", "F_Icon": "fa fa-book", "F_UrlAddress": "/SystemManage/DataItemDetail/Index" },
-                    { "F_ModuleId": "3", "F_ParentId": "1",  "F_FullName": "工作流程", "F_Icon": "fa fa-share-alt", "F_UrlAddress": null},
-                    
-                    { "F_ModuleId": "4", "F_ParentId": "0",  "F_FullName": "系统设置", "F_Icon": "fa fa-coffee", "F_UrlAddress": null },
-                    { "F_ModuleId": "2", "F_ParentId": "4",  "F_FullName": "权限管理", "F_Icon": "fa fa-book", "F_UrlAddress": "<?php echo U('Privilege/privilegeList')?>" },
-                    { "F_ModuleId": "3", "F_ParentId": "4",  "F_FullName": "角色管理", "F_Icon": "fa fa-share-alt", "F_UrlAddress": null},
-                    { "F_ModuleId": "3", "F_ParentId": "4",  "F_FullName": "管理员管理", "F_Icon": "fa fa-share-alt", "F_UrlAddress": null},
-                    
-                    ];
+                    { "F_ModuleId": "5", "F_ParentId": "0",  "F_FullName": "用户管理", "F_Icon": "fa fa-book", "F_UrlAddress": null },
+                    { "F_ModuleId": "6", "F_ParentId": "5",  "F_FullName": "用户列表", "F_Icon": "fa fa-book", "F_UrlAddress": null },
+                    { "F_ModuleId": "7", "F_ParentId": "5",  "F_FullName": "添加会员", "F_Icon": "fa fa-book", "F_UrlAddress": null },
+                    { "F_ModuleId": "1", "F_ParentId": "0",  "F_FullName": "系统设置", "F_Icon": "fa fa-coffee", "F_UrlAddress": null },
+                    { "F_ModuleId": "2", "F_ParentId": "1",  "F_FullName": "权限管理", "F_Icon": "fa fa-book", "F_UrlAddress": "<?php echo U('Privilege/privilegeList')?>" },
+                    { "F_ModuleId": "3", "F_ParentId": "1",  "F_FullName": "角色管理", "F_Icon": "fa fa-share-alt", "F_UrlAddress": null},
+                    { "F_ModuleId": "4", "F_ParentId": "1",  "F_FullName": "管理员管理", "F_Icon": "fa fa-share-alt", "F_UrlAddress": null},
+
+                ];
                 var _html = "";
                 $.each(data, function (i) {
                     var row = data[i];
