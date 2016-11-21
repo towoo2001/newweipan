@@ -1,0 +1,96 @@
+<style>
+    .content_index { margin:0;padding:0;width:100%; }
+    .content_index span { font-size: 12px;padding-right:10px; }
+    .search_index { width:100%; }
+    .search_index ul { list-style: none;margin:0;padding:0; }
+    .search_index ul li { height: 30px;line-height: 30px; padding:0 10px 0 0;float:left; }
+    .search_index ul li input { width:140px; }
+    .search_index ul li .status { width:100px; }
+    .search_index ul li .type { width:100px; }
+    .list_index { clear: left;width:100%;padding-top:10px; }
+    .list_index dl { font-size: 12px;width:100%; margin:0;padding:0; }
+    .list_index dl dt { width:8.2%; height: 30px;line-height: 30px; float:left; border: 1px solid red; border-right:0; text-align: center;}
+    .list_index dl dt.last { border-right:1px solid red;}
+    .list_index dl dd { width: 8.2%; height: 30px;line-height: 30px; float:left; margin:0; border: 1px solid red; border-right:0;border-top:0;text-align: center; }
+    .list_index dl dd.last { border-right:1px solid red; }
+    .count_index { clear: left;padding:10px 15px 0 0;float:right; }
+</style>
+<div class="content_index">
+    <div class="search_index">
+        <form id="form_search" action="<?php echo empty($_GET['oid']) ? U('User/index') : U('User/index',array('oid'=>$sea['oid'])) ?>" method="get">
+            <ul>
+                <li>
+                    <span>手机号</span><input type="text"  value="{$sea.phone}" placeholder="请输入手机号" name="phone" id="phone"/>
+                </li>
+                <li>
+                    <span>用户名称</span><input type="text" value="{$sea.username}" placeholder="请输入用户名称查找..." name="username" id="username"/>
+                </li>
+                <li>
+                    <span>注册时间</span><input type="text" value="{$sea.starttime}" name="starttime" id="starttime">
+                </li>
+                <li>
+                    <span>到</span><input type="text" value="{$sea.endtime}"  name="endtime" id="endtime">
+                </li>
+                <li>
+                    <span>账号状态</span><select name="status" class="status">
+                    <option value="0">全部</option>
+                    <option value="1" <?php if($_GET['status'] == 1) { echo 'selected';}?> >正常</option>
+                    <option value="2" <?php if($_GET['status'] == 2) { echo 'selected';}?> >冻结</option>
+                    </select>
+                </li>
+                <li>
+                    <span>用户级别</span><select name="type" class="type">
+                    <option value=""></option>
+                    <option value=""></option>
+                    <option value=""></option>
+                    <option value=""></option>
+                    </select>
+                </li>
+                <li style="width:7.6%;float:right;">
+                    <a href="javascript:void(0)" class="btn-flat info" onclick="javascript:$('#form_search').submit();"><span>搜索</span></a>
+                    <a href="javascript:void(0)" class="btn-flat info" onclick="sub()"><span>重置</span></a>
+                    <a href="javascript:void(0)" class="" ><span>添加</span></a>
+                </li>
+            </ul>
+        </form>
+    </div>
+    <div class="list_index">
+        <dl>
+            <dt>编号</dt>
+            <dt>客户名称</dt>
+            <dt>微信昵称</dt>
+            <dt>手机号码</dt>
+            <dt>上级名称</dt>
+            <dt>订单数量</dt>
+            <dt>账户余额</dt>
+            <dt>创建日期</dt>
+            <dt>最近登录</dt>
+            <dt>用户级别</dt>
+            <dt>下级数量</dt>
+            <dt class="last">操作</dt>
+            <div style="clear:both"></div>
+            <?php foreach($ulist as $v):?>
+            <dd><?php echo $v['uid']?></dd>
+            <dd><a href="{:U('User/index')}?oid={$v['uid']}" title="点击查看所属下级"><?php echo $v['username']?></a></dd>
+            <dd><?php echo $v['nickname']?></dd>
+            <dd><?php echo $v['utel']?></dd>
+            <dd><?php echo $v['managername']?></dd>
+            <dd><?php echo $v['ocount']?></dd>
+            <dd><?php echo $v['balance']?></dd>
+            <dd><?php echo date('Y-m-d',$v['utime'])?></dd>
+            <dd><?php echo date('Y-m-d',$v['lastlog'])?></dd>
+            <dd><?php echo $v['otype']?></dd>
+            <dd><?php echo $v['lower']?></dd>
+            <dd class="last">
+                <a href="{:U('User/detail',array('uid'=>$ult['uid']))}">详情</a> |
+                <a href="{:U('User/update',array('uid'=>$ult['uid']))}">修改</a> |
+                <a href="{:U('User/delete',array('uid'=>$ult['uid']))}" onclick="if(confirm('确定要删除吗?请谨慎操作！')){return true;}else{return false;}">删除</a>
+            </dd>
+            <?php endforeach;?>
+        </dl>
+    </div>
+    <div class="count_index">
+        <span>总余额：</span> xxxx <span>元</span>
+    </div>
+</div>
+<script src="__PUBLIC__/Admin/js/jquery/jQuery-2.2.0.min.js"></script>

@@ -21,13 +21,12 @@
   <body class="login-screen" style="background: #02bac6 url('__PUBLIC__/Admin/images/lock-bg.jpg');background-size: cover;background-repeat: repeat;">
     <!-- BEGIN SECTION -->
     <div class="container">
-      <form class="form-signin" action="index.html">
+      <form class="form-signin" action="{:U('User/login')}" enctype="multipart/form-data" method="post" id="login_form">
         <h2 class="form-signin-heading">
           sign in now
         </h2>
 		<!-- LOGIN WRAPPER  -->
         <div class="login-wrap">
-          <form action="{:U('Index/login')}" enctype="multipart/form-data" method="post" id='LOGIN'>
           <input type="text" class="form-control" name="username" placeholder="User ID" autofocus>
           <input type="password" class="form-control" name="password" placeholder="Password">
           <label class="checkbox">
@@ -63,7 +62,6 @@
               Create an account
             </a>
           </div>-->
-          </form>
         </div>
 		<!-- END LOGIN WRAPPER -->
 		<!-- MODAL -->
