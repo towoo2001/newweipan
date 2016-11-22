@@ -3,7 +3,7 @@ namespace Admin\Controller;
 use Think\Controller;
 class  BaseController extends Controller{
 	public function _initialize(){
-		$admin_id = 285;
+		$admin_id = $_SESSION['login'];
 		
 		if(empty($admin_id)){
 		    $admin_id = cookie('admin_id');

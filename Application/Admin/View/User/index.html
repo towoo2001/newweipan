@@ -4,7 +4,7 @@
     .search_index { width:100%; }
     .search_index ul { list-style: none;margin:0;padding:0; }
     .search_index ul li { height: 30px;line-height: 30px; padding:0 10px 0 0;float:left; }
-    .search_index ul li input { width:140px; }
+    .search_index ul li input { width:150px; }
     .search_index ul li .status { width:100px; }
     .search_index ul li .type { width:100px; }
     .list_index { clear: left;width:100%;padding-top:10px; }
@@ -15,6 +15,7 @@
     .list_index dl dd.last { border-right:1px solid red; }
     .count_index { clear: left;padding:10px 15px 0 0;float:right; }
 </style>
+<link rel="stylesheet" href="__PUBLIC__/TimeControl/css/BeatPicker.min.css">
 <div class="content_index">
     <div class="search_index">
         <form id="form_search" action="<?php echo empty($_GET['oid']) ? U('User/index') : U('User/index',array('oid'=>$sea['oid'])) ?>" method="get">
@@ -26,10 +27,13 @@
                     <span>用户名称</span><input type="text" value="{$sea.username}" placeholder="请输入用户名称查找..." name="username" id="username"/>
                 </li>
                 <li>
-                    <span>注册时间</span><input type="text" value="{$sea.starttime}" name="starttime" id="starttime">
+                    <span>注册时间</span>
+                    <input type="text" data-beatpicker="true" name="starttime" value="{$sea.starttime}"/>
+                    
                 </li>
                 <li>
-                    <span>到</span><input type="text" value="{$sea.endtime}"  name="endtime" id="endtime">
+                    <span>到</span>
+                    <input type="text" data-beatpicker="true" name="starttime" value="{$sea.endtime}"/>
                 </li>
                 <li>
                     <span>账号状态</span><select name="status" class="status">
@@ -94,3 +98,28 @@
     </div>
 </div>
 <script src="__PUBLIC__/Admin/js/jquery/jQuery-2.2.0.min.js"></script>
+<script src="__PUBLIC__/TimeControl/js/BeatPicker.min.js"></script>
+
+<script type="text/javascript">
+		
+			$(document).ready(function()
+			{
+				$("#dtBox").DateTimePicker(
+				{
+					dateFormat: "yyyy-MM-dd",
+					dateTimeFormat: "yyyy-MM-dd HH:mm:ss",
+					timeFormat: "HH:mm",
+					shortDayNames: ["日", "一", "二", "三", "四", "五", "六"],
+					fullDayNames: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
+					shortMonthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+					fullMonthNames:  ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],			
+					titleContentDate: "设置日期",
+					titleContentTime: "设置时间",
+					titleContentDateTime: "设置日期和时间",					
+					buttonsToDisplay: ["HeaderCloseButton", "SetButton", "ClearButton"],
+					setButtonContent: "确定",
+					clearButtonContent: "取消"
+				});
+			});
+		
+		</script>

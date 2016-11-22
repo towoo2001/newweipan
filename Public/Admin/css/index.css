@@ -132,7 +132,20 @@ a:hover,a:active,a:focus{outline:none;text-decoration:none;color:#72afd2}
 .content-wrapper .content-tabs .dropdown-menu{border:solid 1px #ccc;border-top-left-radius:0px;border-top-right-radius:0px;right:-1px;}
 
 
-#分页样式
+
+
+#areascontent .rows .add{ padding:0 35px; font-weight:bload; background:url(../images/add.png) no-repeat 0 0px; display:block;}
+#areascontent .rows .add a{line-height:35px; height:35px;  font-size:16px; font-weight:bold}
+#areascontent .rows .add_icon{background:url(../images/add_icon.png) no-repeat 0 0px; padding:0 25px;}
+#areascontent .rows .jian_icon{background:url(../images/jian_icon.png) no-repeat 0 0px;  margin:0 20px;}
+#areascontent .rows td{ border:1px solid #ccc; background:#fff; line-height:28px; padding:10px;}
+#areascontent .rows th{background:#fff;}
+#areascontent .rows input[type=text]{ width:250px;}
+#areascontent .rows select{line-height:30px; height:30px;}
+#areascontent .rows	.checkbox, .radio{display:inline;padding:0;}
+
+
+
 .pagination ul {
     display: inline-block;
     margin-bottom: 0;
@@ -153,6 +166,7 @@ a:hover,a:active,a:focus{outline:none;text-decoration:none;color:#72afd2}
     padding-left: 5px;
 }
 .pagination ul li.rows b{color: #f00}
+
 
 .pagination ul li a, .pagination ul li span {
     float: left;
