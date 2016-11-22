@@ -27,8 +27,8 @@ class OrderController extends BaseController
      * @return [type] [description]
      */
     public function details(){
-        //$id = I('get.uid');
-        $list = R('Server/Order/details');
+        $id = I('get.oid');
+        $list = R('Server/OrderServer/Orderdetails',array($id));
     
         $this->assign('list',$list);
         $this->display('orderdetails');
@@ -51,9 +51,10 @@ class OrderController extends BaseController
     /**
      * 成交订单详情
      */
-    public function odetails()
-    {
-        $list = R('Server/Order/odetails');
+    public function odetails(){
+        $id = I('get.oid');
+        $list = R('Server/OrderServer/Orderodetails',array($id));
+
         $this->assign('list',$list);
         $this->display('Orderodetails');
     }
