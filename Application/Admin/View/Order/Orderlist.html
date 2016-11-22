@@ -98,32 +98,47 @@
                 <form id="form1" action="__URL__/Orderlist" method="post">
                 <h3 style="height:40px;width: 100%">持仓订单列表</h3>
                     <div class="tpsearch" >
-                        订单编号：<input type="text" class="span6 search" placeholder="请输入订单编号查找..." name="orderno" id="orderno"/>
+                        订单编号：<input type="text" class="span6 search" placeholder="请输入订单编号查找..." name="orderno" id="orderno" value="{$list[sea][orderno]}"/>
                     </div>
                     <div class="tpsearch" >
-                        用户名称：<input type="text"  class="span6 search" placeholder="请输入用户名称查找..." name="username" id="username"/>
+                        用户名称：<input type="text"  class="span6 search" placeholder="请输入用户名称查找..." name="username" id="username" value="{$list[sea][username]}" />
                     </div>
                     <div class="tpsearch" >
-                        用户id：<input type="text"  class="span6 search" placeholder="请输入用户id称查找..." name="uid" id="uid"/>
+                        用户id：<input type="text"  class="span6 search" placeholder="请输入用户id称查找..." name="uid" id="uid" value="{$list[sea][uid]}"/>
                     </div>
-                手机号：<input type="text"  class="span6 search" placeholder="请输入手机号称查找..." name="utel" id="utel"/>
-                商品名：<input type="text"  class="span6 search" placeholder="请输入商品名称查找..." name="ptitle" id="ptitle"/>
+                手机号：<input type="text"  class="span6 search" placeholder="请输入手机号称查找..." name="utel" id="utel" value="{$list[sea][utel]}"/>
+                商品名：<input type="text"  class="span6 search" placeholder="请输入商品名称查找..." name="ptitle" id="ptitle" value="{$list[sea][ptitle]}"/>
                 所属会员单位名称:<input type="text"   class="span6 search" placeholder="待定" name="otype" id="otype"  />
                     </div>
                 <div class="span10 pull-left" style="margin-top: 20px;">
                     <div class="tpsearch" style="width: 25%">
-                        订单类型：<select id="ostyle"  name="ostyle">
+                        交易方向：<select id="ostyle"  name="ostyle">
                                     <option value="">默认不选</option>
-                                    <option value="0">买涨</option>
-                                    <option value="1">买跌</option>
+                                    <if condition="$list[sea][ostyle] eq '0' ">
+                                    <option value="0" selected>做多</option>
+                                    <else/>
+                                    <option value="0">做多</option>
+                                    </if>
+                                    <if condition="$list[sea][ostyle] eq '1' ">
+                                    <option value="1" selected>做空</option>
+                                    <else/>
+                                    <option value="1">做空</option>
+                                    </if>
                                 </select>
                     </div>
                     <div class="tpsearch" style="width: 25%">
-                        交易方式：<select id="ploss"  name="ploss">
+                        支付方式：<select id="paymethod"  name="paymethod">
                                     <option value="">默认不选</option>
-                                    <option value="0">银联</option>
-                                    <option value="1">支付宝</option>
-                                    <option value="2">微信</option>
+                                    <if condition="$list[sea][paymethod] eq '0'">
+                                    <option value='0' selected>银联</option>
+                                    <else/>
+                                    <option value='0'>银联</option>
+                                    </if>
+                                    <if condition="$list[sea][paymethod] eq '1'">                                    
+                                    <option value='1' selected>微信</option>
+                                    <else/>
+                                    <option value='1'> 微信</option>
+                                    </if>
                                 </select>
                     </div>
 
@@ -222,20 +237,30 @@
                             <td align="center">
                                <?php echo $v['onumber']?>
                             </td>
-                            <td align="center" style="color: red">
-                               支付方式
-                            </td>
-                            <td align="center">
-                               <?php if($v['ostyle']==0){echo'做多';}else{echo '做空';}?>
-                            </td>                          
+                            <td>
+								<if condition="$v['paymethod'] eq '0'">
+								<font color="#2fb44e">银联</font>
+								<elseif condition="$v['paymethod'] eq '1'"/>
+								<font color="#ed0000">微信</font>
+								<else/>
+								</if>
+							</td>  
+                            <td>
+								<if condition="$v['ostyle'] eq '0'">
+								<font color="#2fb44e">做空</font>
+								<elseif condition="$v['ostyle'] eq '1'"/>
+								<font color="#ed0000">做多</font>
+								<else/>
+								</if>
+							</td>                         
                             <td align="center">
                                <?php echo $v['buytime']?>
                             </td>
                             <td align="center">
                                <?php echo $v['buyprice']?>
                             </td>
-                            <td align="center" style="color: red">
-                               大盘点位
+                            <td align="center" >
+                               <?php echo $v['buydpzs']?>
                             </td>
                             <td align="center">
                                <?php echo $v['ploss']?>
