@@ -51,7 +51,7 @@ class PrivServerController extends Controller {
      * 获取角色列表
      */
     public function getRow(){
-        $list = M('Role')->field("id,role_name")->select();
+        $list = M('Role')->field("id,role_name")->where("role_type = 1")->select();
         return $list;
     }
     public function getAdmin(){
