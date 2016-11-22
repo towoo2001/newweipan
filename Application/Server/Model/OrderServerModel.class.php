@@ -49,7 +49,7 @@ class OrderServerModel extends Model
 		return	$list;
 	}
 	/**
-	 * 持仓订单列表
+	 * 持仓订单列表1
 	 * @return [type] [description]
 	 */
 	public function get_list(){
