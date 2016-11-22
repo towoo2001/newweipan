@@ -77,7 +77,8 @@ class PrivilegeController extends BaseController{
         if(IS_POST){
             $dada['role_name'] = $_POST['rowname'];
             $dada['privilege_id'] = implode(',', I('post.priv_id'));
-            $data['role_type'] = $_POST['role_type'];
+            $dada['role_type'] = $_POST['roletype'];
+
             if(M('Role')->add($dada)){
                 $this->success('添加成功',U('roleList'));exit;
             }else{
