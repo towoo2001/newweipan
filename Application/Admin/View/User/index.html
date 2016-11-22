@@ -32,7 +32,7 @@
                     <span>到</span><input type="text" value="{$sea.endtime}"  name="endtime" id="endtime">
                 </li>
                 <li>
-                    <span>账号状态</span><select name="status" class="status">
+                    <span>账号状态</span><select name="status" id="status" class="status">
                     <option value="0">全部</option>
                     <option value="1" <?php if($_GET['status'] == 1) { echo 'selected';}?> >正常</option>
                     <option value="2" <?php if($_GET['status'] == 2) { echo 'selected';}?> >冻结</option>
@@ -47,9 +47,9 @@
                     </select>
                 </li>
                 <li style="width:7.6%;float:right;">
-                    <a href="javascript:void(0)" class="btn-flat info" onclick="javascript:$('#form_search').submit();"><span>搜索</span></a>
-                    <a href="javascript:void(0)" class="btn-flat info" onclick="sub()"><span>重置</span></a>
-                    <a href="javascript:void(0)" class="" ><span>添加</span></a>
+                    <a href="javascript:void(0)" onclick="javascript:$('#form_search').submit();"><span>搜索</span></a>
+                    <a href="javascript:void(0)" id="reset"><span>重置</span></a>
+                    <a href="{:U('User/update')}" ><span>添加</span></a>
                 </li>
             </ul>
         </form>
@@ -74,7 +74,7 @@
             <dd><a href="{:U('User/index')}?oid={$v['uid']}" title="点击查看所属下级"><?php echo $v['username']?></a></dd>
             <dd><?php echo $v['nickname']?></dd>
             <dd><?php echo $v['utel']?></dd>
-            <dd><?php echo $v['managername']?></dd>
+            <dd><a href="{:U('User/index')}?uid={$v['oid']}" title="点击查看上级"><?php echo $v['managername']?></a></dd>
             <dd><?php echo $v['ocount']?></dd>
             <dd><?php echo $v['balance']?></dd>
             <dd><?php echo date('Y-m-d',$v['utime'])?></dd>
@@ -83,8 +83,8 @@
             <dd><?php echo $v['lower']?></dd>
             <dd class="last">
                 <a href="{:U('User/detail',array('uid'=>$ult['uid']))}">详情</a> |
-                <a href="{:U('User/update',array('uid'=>$ult['uid']))}">修改</a> |
-                <a href="{:U('User/delete',array('uid'=>$ult['uid']))}" onclick="if(confirm('确定要删除吗?请谨慎操作！')){return true;}else{return false;}">删除</a>
+                <a href="{:U('User/update',array('uid'=>$v['uid']))}">修改</a> |
+                <a href="{:U('User/delete',array('uid'=>$v['uid']))}" onclick="if(confirm('确定要删除吗?请谨慎操作！')){return true;}else{return false;}">删除</a>
             </dd>
             <?php endforeach;?>
         </dl>
@@ -94,3 +94,14 @@
     </div>
 </div>
 <script src="__PUBLIC__/Admin/js/jquery/jQuery-2.2.0.min.js"></script>
+<script>
+    $(function(){
+        $('#reset').click(function(){
+            $('#phone').val('');
+            $('#username').val('');
+            $('#starttime').val('');
+            $('#endtime').val('');
+            $('#status').val('0');
+        });
+    });
+</script>
