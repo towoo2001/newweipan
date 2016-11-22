@@ -38,7 +38,13 @@ class OrderController extends BaseController
      */
     public function Orderolist()
     {
-        $list = R('Server/Order/Orderolist');
+        if(IS_POST){
+            $list = R('Server/OrderServer/seach');
+        
+        }else {
+            $list = R('Server/OrderServer/Orderolist');
+        }
+        
         $this->assign('list',$list);
         $this->display();
     }
