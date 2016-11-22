@@ -95,7 +95,7 @@
 <body>
     <div id="areascontent">
         <div class="rows" style="margin-bottom: 0.8%; overflow: hidden;">
-                <form id="form1" action="__URL__/tlist" method="get">
+                <form id="form1" action="__URL__/Orderolist" method="get">
                 <h3 style="height:40px;width: 100%">订单流水</h3>
                     <div class="tpsearch" >
                         订单编号：<input type="text" class="span6 search" placeholder="请输入订单编号查找..." name="orderno" id="orderno"/>
@@ -103,13 +103,28 @@
                     <div class="tpsearch" >
                         用户名称：<input type="text" value="{$sea.username}" class="span6 search" placeholder="请输入用户名称查找..." name="username" id="username"/>
                     </div>
-                
+                 用户id：<input type="text"  class="span6 search" placeholder="请输入用户id称查找..." name="uid" id="uid"/>
+                    </div>
+                手机号：<input type="text"  class="span6 search" placeholder="请输入手机号称查找..." name="utel" id="utel"/>
+                商品名：<input type="text"  class="span6 search" placeholder="请输入商品名称查找..." name="ptitle" id="ptitle"/>
+                代理/经纪人:<input type="text"   class="span6 search" placeholder="待定" name="otype" id="otype"  />
+             <div class="tpsearch">
+                 	交易时间：<input type="text" value="03/29/2014" class="input-large datepicker" style="margin-bottom: 0;" name="buytime" id="buytime">
+                 </div>      
                 <div class="span10 pull-left" style="margin-top: 20px;">
                     <div class="tpsearch" style="width: 25%">
-                        订单类型：<select id="ostyle"  name="ostyle">
+                        交易方向：<select id="ostyle"  name="ostyle">
                                     <option value="">默认不选</option>
                                     <option value="0">买涨</option>
                                     <option value="1">买跌</option>
+                                </select>
+                    </div>
+                              <div class="tpsearch" style="width: 25%">
+                        支付方式：<select id="ploss"  name="ploss">
+                                    <option value="">默认不选</option>
+                                    <option value="0">银联</option>
+                                    <option value="1">支付宝</option>
+                                    <option value="2">微信</option>
                                 </select>
                     </div>
                     <div class="tpsearch" style="width: 25%">

@@ -96,17 +96,20 @@
     <div id="areascontent">
         <div class="rows" style="margin-bottom: 0.8%; overflow: hidden;">
                 <form id="form1" action="__URL__/Orderlist" method="post">
-                <h3 style="height:40px;width: 100%">订单流水</h3>
+                <h3 style="height:40px;width: 100%">持仓订单列表</h3>
                     <div class="tpsearch" >
                         订单编号：<input type="text" class="span6 search" placeholder="请输入订单编号查找..." name="orderno" id="orderno"/>
                     </div>
                     <div class="tpsearch" >
-                        用户名称：<input type="text" value="{$sea.username}" class="span6 search" placeholder="请输入用户名称查找..." name="username" id="username"/>
+                        用户名称：<input type="text"  class="span6 search" placeholder="请输入用户名称查找..." name="username" id="username"/>
                     </div>
                     <div class="tpsearch" >
-                        用户id：<input type="text" value="{$sea.uid}" class="span6 search" placeholder="请输入用户id称查找..." name="uid" id="uid"/>
+                        用户id：<input type="text"  class="span6 search" placeholder="请输入用户id称查找..." name="uid" id="uid"/>
                     </div>
-                
+                手机号：<input type="text"  class="span6 search" placeholder="请输入手机号称查找..." name="utel" id="utel"/>
+                商品名：<input type="text"  class="span6 search" placeholder="请输入商品名称查找..." name="ptitle" id="ptitle"/>
+                所属会员单位名称:<input type="text"   class="span6 search" placeholder="待定" name="otype" id="otype"  />
+                    </div>
                 <div class="span10 pull-left" style="margin-top: 20px;">
                     <div class="tpsearch" style="width: 25%">
                         订单类型：<select id="ostyle"  name="ostyle">
@@ -116,26 +119,19 @@
                                 </select>
                     </div>
                     <div class="tpsearch" style="width: 25%">
-                        订单盈亏：<select id="ploss"  name="ploss">
+                        交易方式：<select id="ploss"  name="ploss">
                                     <option value="">默认不选</option>
-                                    <option value="0">盈利</option>
-                                    <option value="1">亏损</option>
-                                </select>
-                    </div>
-                    <div class="tpsearch" style="width: 25%">
-                        订单状态：<select name="ostaus" id="ostaus" >
-                                    <option value="">默认不选</option>
-                                    <option value="4">建仓</option>
-                                     <option value="1">平仓</option>
-                                    <option value="2">爆仓</option>
-                                    <option value="3">隔夜利息扣除</option>
-                                    
+                                    <option value="0">银联</option>
+                                    <option value="1">支付宝</option>
+                                    <option value="2">微信</option>
                                 </select>
                     </div>
 
+
                 </div>
                 <div class="span10 pull-left" style="margin-top: 20px;">
-                    <a href="javascript:void(0)"  onclick="javascript:$('#form1').submit();">开始查找</a>
+                <button type="submit">查找</button>
+                    
                     <!-- <a href="javascript:void(0)"  onclick="sub()">查找导出</a> -->
                 </div>
                 </form>
@@ -272,10 +268,5 @@
     </div>
    
 </body>
-<script type="text/javascript">
-function{
- $('#form1').submit();   
-}
 
-</script>
 </html>
