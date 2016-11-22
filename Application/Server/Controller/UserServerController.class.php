@@ -10,6 +10,8 @@ class UserServerController extends Controller {
     public function login($condition){
         $user = D('userinfo');
         $condition['ustatus'] = $user::STATUS_ON;
+        $condition['vertus'] = $user::VERTUS_ON;
+        $condition['otype'] = array('neq',$user::TYPE_CUSTOMER);
         $result = $user->field("uid,upwd,username,utel,utime,otype,ustatus,vertus")->where($condition)->find();
         return $result;
     }
@@ -29,7 +31,8 @@ class UserServerController extends Controller {
      * @get array  查询条件
      * @return array
      */
-    public function getMemberList($get=array()){
+    public function getMemberList($get = array()){
+        $info = $_SESSION['login'];
         $pre = C('DB_PREFIX');  //表前缀
         $user = D('userinfo');
         $order = D('order');
@@ -66,19 +69,22 @@ class UserServerController extends Controller {
             $status = $get['status']-1;
             $condition .= " and u.ustatus = {$status}";
         }
-        if($get['type']){
-            $type = $get['type']-1;
-            $condition .= " and u.otype = {$type}";
-        }
         if($get['oid']){                                    // 查找所属下级
             $condition .= " and u.oid = ".$get['oid'];
             $orderby = "u.otype desc,u.uid desc";
             $sea['oid'] = $get['oid'];
         } elseif($get['uid']){                              //查找上级
             $condition .= " and u.uid = ".$get['uid'];
-        } else{                                             //查找会员单位
-            $condition .= " and u.otype = ".$user::TYPE_MEMBER;
-            $orderby = "u.uid desc";
+        } else {
+            /*if($info['otype'] == $user::TYPE_EXCHANGE){
+                $condition .= " and u.otype = ".$user::TYPE_MEMBER;
+                $orderby = "u.uid desc";
+            } else {
+                $condition .= " and u.oid = ".$info['uid'];
+                $orderby = "u.otype desc";
+            }*/
+            $condition .= " and u.oid = ".$info['uid'];
+            $orderby = "u.otype desc";
         }
 
         //查询用户和账户信息

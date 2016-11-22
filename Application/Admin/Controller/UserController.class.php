@@ -11,11 +11,10 @@ class UserController extends Controller {
             $condition['upwd'] = md5(I('post.password'));
             $result = R('Server/UserServer/login',array($condition));
             if(empty($result)){
-                $this->error('用户名或密码错误!');
+                $this->error('登录失败!');
             } else {
                 $id = $result['uid'];
-                $arr = [$id,$result['username']];
-                
+                $arr = ['uid' => $id,'username' => $result['username'],'otype' => $result['otype']];
                 $data['lastlog'] = time();
                 //记录登录时间
                 R('Server/UserServer/lastLogin',array($id,$data));
@@ -32,7 +31,6 @@ class UserController extends Controller {
      * 用户列表
      * */
     public function index(){
-        $user = D('userinfo');
         $get = $_GET;
         $ulist = R('Server/UserServer/getMemberList',array($get));
         $this->assign('ulist',$ulist[0]);
