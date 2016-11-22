@@ -3,7 +3,7 @@ namespace Admin\Controller;
 use Think\Controller;
 class  BaseController extends Controller{
 	public function _initialize(){
-		$admin_id = 285;
+		$admin_id = $_SESSION['login'];
 		
 		if(empty($admin_id)){
 		    $admin_id = cookie('admin_id');
@@ -28,12 +28,11 @@ class  BaseController extends Controller{
 			if($info){
 				return true;
 			}else{
-                
 				$this->error('你无权操作');
 			}
 			return true;
 		}else{
-			$this->error('必须登陆',U('Login/login'));
+			$this->error('必须登陆',U('User/login'));
 		}
 	}
 }
