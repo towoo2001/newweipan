@@ -26,6 +26,7 @@ class UserController extends Controller {
      * 用户列表
      * */
     public function index(){
+        $this->display();exit;
         $user = D('userinfo');
         $get = $_GET;
         $condition = "u.ustatus = ".$user::STATUS_ON;
