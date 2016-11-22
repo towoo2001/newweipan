@@ -10,14 +10,7 @@ class PrivilegeController extends BaseController{
         $list = $model->getPrivilegeData();
         $list = _infinite($list,0,0);
         $this->assign('list',$list);
-        //token不存在就重新键
-        if(!isset($_SESSION['token']) || $_SESSION['token']=='') {
-            set_token();
-        }
         if(IS_POST){
-            if(!valid_token()){
-                $this->error('token error，请不要重复提交！');
-            }
             if(!$model->create($model->addPrivilegeData())){
                 $this->error($model->getError());
             }
@@ -50,14 +43,7 @@ class PrivilegeController extends BaseController{
         $id = intval($_GET['id']);
         $row = R('Server/PrivServer/editPriv',array($id));
         $this->assign('row',$row);
-        //防止表单重复提交
-        if(!isset($_SESSION['token']) || $_SESSION['token']=='') {
-            set_token();
-        }
         if(IS_POST){
-            if(!valid_token()){
-                $this->error('token error，请不要重复提交！');
-            }
               if($model->create($_POST)){
                   if($model->data($_POST)->save()!==false){
                       $this->success('修改成功',U('privilegeList'));exit;
