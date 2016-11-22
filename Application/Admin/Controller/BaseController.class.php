@@ -28,12 +28,11 @@ class  BaseController extends Controller{
 			if($info){
 				return true;
 			}else{
-                
 				$this->error('你无权操作');
 			}
 			return true;
 		}else{
-			$this->error('必须登陆',U('Login/login'));
+			$this->error('必须登陆',U('User/login'));
 		}
 	}
 }
