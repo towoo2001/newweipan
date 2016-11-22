@@ -82,4 +82,12 @@ class UserController extends Controller {
             $this->error('删除失败！');
         }
     }
+
+    /**
+     * 退出
+     * */
+    public function logout(){
+        session('login','');
+        $this->redirect('User/login');
+    }
 }
