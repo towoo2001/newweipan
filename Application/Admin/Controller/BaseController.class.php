@@ -3,12 +3,7 @@ namespace Admin\Controller;
 use Think\Controller;
 class  BaseController extends Controller{
 	public function _initialize(){
-		$admin_id = $_SESSION['login'];
-		
-		if(empty($admin_id)){
-		    $admin_id = cookie('admin_id');
-		}
-		
+		$admin_id = intval($_SESSION['login']['uid']);
 		if($admin_id > 0){
 			//如果是超级管理员则不需要验证
 			if($_SESSION['admin_id']==285){

@@ -15,6 +15,7 @@ class UserController extends Controller {
             } else {
                 $id = $result['uid'];
                 $arr = [$id,$result['username']];
+                
                 $data['lastlog'] = time();
                 //记录登录时间
                 R('Server/UserServer/lastLogin',array($id,$data));
