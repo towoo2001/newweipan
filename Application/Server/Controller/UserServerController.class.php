@@ -109,7 +109,7 @@ class UserServerController extends Controller {
             }
             $ulist[$k]['otype'] = $otype;
         }
-        $ulist = [$ulist,$sea];
+        $ulist = array($ulist,$sea);
         return $ulist;
     }
 

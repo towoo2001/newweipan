@@ -14,7 +14,7 @@ class UserController extends Controller {
                 $this->error('登录失败!');
             } else {
                 $id = $result['uid'];
-                $arr = ['uid' => $id,'username' => $result['username'],'otype' => $result['otype']];
+                $arr = array('uid' => $id,'username' => $result['username'],'otype' => $result['otype']);
                 $data['lastlog'] = time();
                 //记录登录时间
                 R('Server/UserServer/lastLogin',array($id,$data));
@@ -74,7 +74,7 @@ class UserController extends Controller {
      * */
     public function delete(){
         $user = D('userinfo');
-        $arr = ['ustatus' => $user::STATUS_OFF];
+        $arr = array('ustatus' => $user::STATUS_OFF);
         $result = R('Server/UserServer/deleteUser',array($_GET['uid'],$arr));
         if($result){
             $this->success('删除成功！',U('User/index'));
