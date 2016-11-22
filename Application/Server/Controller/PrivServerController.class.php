@@ -74,6 +74,7 @@ class PrivServerController extends Controller {
         //思路：根据登录管理员到id,分别获取权限按钮，要求只取出前两级的按钮。
         $admin_id = intval($_SESSION['login']['uid']);
         if(empty($admin_id)) $this->error('必须登陆',U('User/login'));
+        
         if($admin_id==285){
             //则是超级管理员
             //先取出顶级权限，再根据顶级权限取出其子级权限。
