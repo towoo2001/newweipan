@@ -30,10 +30,12 @@
                                 <th>
                                     <span class="line"></span>具备权限
                                 </th>
-                                
+                                <th>角色类型</th>
                                 <th>操作</th>
                                 
                             </tr>
+                            
+                          
                         </thead>
  
                         <tbody>
@@ -41,6 +43,7 @@
                         <tr>
                        		<td width="100"><?php echo $v['role_name']?></td>
                        		<td><?php echo $v['privilegelist']?></td> 
+                       		<td align="center"><?php echo $v['role_type'] == 1? '系统管理员':'用户' ?></td>
                        		<td align="center">
                        		 <a href="<?php echo U('Privilege/editRole',array('id'=>$v['id']))?>">编辑</a>/
                                 <a href="<?php echo U('Privilege/delRole',array('id'=>$v['id']))?>">删除</a>

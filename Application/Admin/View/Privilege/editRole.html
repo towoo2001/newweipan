@@ -50,6 +50,16 @@
                               </tr>
                               
                               <tr>
+                              	<td>角色类型</td>
+                              	<td>
+                              		<span style="padding:30px;"><input type="radio" name="role_type" <?php echo $row['role_type'] ==1 ?'checked=checked':''?> value="1">&nbsp;&nbsp;系统管理员 </span>
+                              		
+                              		<span><input type="radio" name="role_type" value="2" <?php echo $row['role_type'] ==2 ?'checked=checked':''?>>&nbsp;&nbsp;用户</span>
+                              	</td>
+                              </tr>
+                              
+                              
+                              <tr>
                               		
                               		<td  align="left" colspan="2">
                               			<input type="hidden" value="<?php echo $row['id']?>" name="id">
