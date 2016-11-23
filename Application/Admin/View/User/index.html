@@ -13,9 +13,15 @@
     .list_index .first { width:5.75%;}
     .list_index .last { border-right:1px solid #e6e6e6;}
     .list_index dl dd { width: 11.7%; height: 30px;line-height: 30px; float:left; margin:0; border: 1px solid #e6e6e6; border-right:0;border-top:0;text-align: center; }
-    .count_index { clear: left;padding:10px 15px 0 0;float:right; }
+    .pages { clear: left;padding:10px 10px 0 0;float:right; font-size: 12px; }
+    .pages a,.pages span { display:inline-block; padding:2px 5px; margin:0 1px; border:1px solid #f0f0f0; -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px; }
+    .pages a,.pages li { display:inline-block; list-style: none; text-decoration:none; color:#000; }
+    .pages a.first,.pages a.prev,.pages a.next,.pages a.end{ margin:0; }
+    .pages a:hover{ border-color:#50A8E6; }
+    .pages span.current{ background:#50A8E6; color:#FFF; font-weight:700; border-color:#50A8E6; }
 </style>
 <link rel="stylesheet" href="__PUBLIC__/TimeControl/css/BeatPicker.min.css">
+<link rel="stylesheet" href="css/BeatPicker.min.css"/>
 <div class="content_index">
     <div class="search_index">
         <form id="form_search" action="<?php echo empty($_GET['oid']) ? U('User/index') : U('User/index',array('oid'=>$sea['oid'])) ?>" method="get">
@@ -61,15 +67,9 @@
     <div class="list_index">
         <dl>
             <dt class="first">编号</dt>
-            <!--<dt>客户名称</dt>-->
-            <!--<dt>微信昵称</dt>-->
             <dt>手机号码</dt>
             <dt>上级名称</dt>
-            <!--<dt>订单数量</dt>
-            <dt>账户余额</dt>-->
             <dt>创建日期</dt>
-            <!--<dt>最近登录</dt>-->
-            <!--<dt>下级数量</dt>-->
             <dt>用户级别</dt>
             <dt>注册码</dt>
             <dt>运营中心</dt>
@@ -78,17 +78,11 @@
             <div style="clear:both"></div>
             <?php foreach($ulist as $v):?>
             <dd class="first"><?php echo $v['uid']?></dd>
-            <!--<dd><?php echo $v['username']?></dd>-->
-            <!--<dd><?php echo $v['nickname']?></dd>-->
             <dd><a href="{:U('User/index')}?oid={$v['uid']}" title="点击查看所属下级"><?php echo $v['utel']?></a></dd>
             <dd><!--<a href="{:U('User/index')}?uid={$v['oid']}" title="点击查看上级">--><?php echo $v['managername']?><!--</a>--></dd>
-            <!--<dd><?php echo $v['ocount']?></dd>
-            <dd><?php echo $v['balance']?></dd>-->
             <dd><?php echo date('Y-m-d',$v['utime'])?></dd>
-            <!--<dd><?php echo date('Y-m-d',$v['lastlog'])?></dd>-->
-            <!--<dd><?php echo $v['lower']?></dd>-->
             <dd><?php echo $v['otype']?></dd>
-            <dd><?php echo $v['otype']?></dd>
+            <dd><?php echo $v['code']?></dd>
             <dd><?php echo $v['comname']?></dd>
             <dd><?php echo $v['ustatus']?></dd>
             <dd class="last">
@@ -99,15 +93,15 @@
             <?php endforeach;?>
         </dl>
     </div>
-    <div class="count_index">
+    <div class="pages">
         <!--<span>总余额：</span> xxxx <span>元</span>-->
         <?php echo $page;?>
     </div>
 </div>
 <script src="__PUBLIC__/Admin/js/jquery/jQuery-2.2.0.min.js"></script>
 <script src="__PUBLIC__/TimeControl/js/BeatPicker.min.js"></script>
-
-
+<script src="js/jquery-1.11.0.min.js"></script>
+<script src="js/BeatPicker.min.js"></script>
 <script>
     $(function(){
         $('#reset').click(function(){

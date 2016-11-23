@@ -81,11 +81,11 @@ class UserServerController extends Controller {
             $orderby = "otype desc";
         }
 
+        $count = $user->where($condition)->count();
+        $page = getpage($count,20);
         //查询用户和账户信息
-        $field = 'uid,username,utel,utime,oid,managername,otype,ustatus,comname';
-        $ulist = $user->table($pre.'userinfo')->where($condition)->field($field)->order($orderby)->select();
-
-        $page = getpage($user,$condition,2);
+        $field = 'uid,username,utel,utime,oid,managername,otype,ustatus,comname,code';
+        $ulist = $user->table($pre.'userinfo')->where($condition)->field($field)->order($orderby)->limit($page->firstRow,$page->listRows)->select();
 
         //循环用户id，操作用户信息
         foreach($ulist as $k => $v){
@@ -142,11 +142,11 @@ class UserServerController extends Controller {
             $data['otype'] = $user::TYPE_MEMBER;
             $data['oid']   = R('Server/UserServer/getExchangeID');
             $data['wxtype']= 1;
-
+            
             //生成随机邀请码
             $str = array_merge(range(0,9),range('a','z'),range('A','Z'));
             shuffle($str);
-            $str = implode('',array_slice($str,0,8));
+            $str = strtoupper(implode('',array_slice($str,0,8)));
             $data['code'] = $str.$data['uid'];
 
             $result = $user->add($data);
