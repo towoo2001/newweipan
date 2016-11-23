@@ -8,12 +8,14 @@
     <link rel="stylesheet" href="__PUBLIC__/Admin/js/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="__PUBLIC__/Admin/css/font-awesome.min.css">
     <link rel="stylesheet" href="__PUBLIC__/Admin/css/index.css">
-    <script src="__PUBLIC__/Admin/js/jquery/jQuery-2.2.0.min.js"></script>
-    <script src="__PUBLIC__/Admin/js/charts/Chart.js"></script>
 
-    <link rel="stylesheet" href="__PUBLIC__/Time/css/BeatPicker.min.css"/>
-    <script src="__PUBLIC__/Time/js/jquery-1.11.0.min.js"></script>
-    <script src="__PUBLIC__/Time/js/BeatPicker.min.js"></script>
+
+
+    <link rel="stylesheet" href="__PUBLIC__/Time/css/hDate.css"/>
+
+    <script src="__PUBLIC__/Admin/js/jquery/jQuery-2.2.0.min.js"></script>
+    <script src="__PUBLIC__/Time/js/hDate.js"></script>
+
     <style type="text/css">
             td{ border:1px solid #ccc; background:#fff;}
             th{background:#fff;}
@@ -30,15 +32,16 @@
                         订单编号：<input type="text" class="span6 search" placeholder="请输入订单编号查找..." name="orderno" id="orderno" value="{$list[sea][orderno]}"/>
                     </div>
                     <div class="tpsearch" >
-                        用户名称：<input type="text" value="{$sea.username}" class="span6 search" placeholder="请输入用户名称查找..." name="username" id="username" value="{$list[sea][username]}"/>
+                        用户名称：<input type="text"  class="span6 search" placeholder="请输入用户名称查找..." name="username" id="username" value="{$list[sea][username]}"/>
                     </div>
                  用户id：<input type="text"  class="span6 search" placeholder="请输入用户id称查找..." name="uid" id="uid"/>
                 手机号：<input type="text"  class="span6 search" placeholder="请输入手机号称查找..." name="utel" id="utel"/>
                 商品名：<input type="text"  class="span6 search" placeholder="请输入商品名称查找..." name="ptitle" id="ptitle"/>
 
                 代理/经纪人:<input type="text"   class="span6 search" placeholder="待定" name="otype" id="otype"  />
-                 开始时间:<input type="text" data-beatpicker="true" name="strtime" id="strtime" value="{$list['sea'][strtime]}" />
-                 结束时间:<input type="text" data-beatpicker="true" name="endtime" id="endtime" value="{$list['sea'][endtime]}" />
+                 开始时间:
+                 <input id="strtime" onClick="calendar.show({ id: this })" type="text" name='strtime'  value="{$list[sea][strtime]}" />
+                 结束时间:<input id="endtime" onClick="calendar.show({ id: this })" type="text" name='endtime' value="{$list[sea][endtime]}" />
                     </div>
 
 
@@ -78,6 +81,7 @@
                 </div>
                 <div class="span10 pull-left" style="margin-top: 20px;">
                     <button type="submit">查找</button>
+                    <input type="reset" name="button2" value="重置">
                 </div>
                 </form>
             <table class="table table-hover">
@@ -152,7 +156,9 @@
                         
                         <tbody>
                         
-                       <?php foreach($list as $v){?>
+                       <?php foreach($list as $k=>$v){
+                            if($k=='page'||$K=='sea'){continue;}
+                       ?>
                         <tr class="first">
                             <td>
                                <?php echo $v['selltime']?> 
@@ -164,7 +170,7 @@
                                <?php echo $v['username']?>
                             </td>  
                             <td align="center" style="color: red">
-                               经纪人/代理商名称
+                               
                             </td>  
                              
                             <td align="center">
@@ -208,7 +214,7 @@
                                <?php echo $v['selltime']?>
                             </td>
                             <td align="center" style="color: red">
-                               平仓类型
+                               
                             </td>
                             <td align="center">
                                <?php echo $v['ploss']?>
@@ -224,7 +230,10 @@
                             </td>
                         </tr>
                         <?php } ?>
-                                        
+                        <tr>
+                             <td colspan="18"> <?php  echo $list['page']?></td>
+                        </tr>
+           
                         </tbody>
                     </table>
 

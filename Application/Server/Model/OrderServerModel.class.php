@@ -41,16 +41,26 @@ class OrderServerModel extends Model
 			$sea['ptitle'] = I('post.ptitle');
 		}
 		$where['ostaus'] ='0';
+
+		
+		$count = $this->where($where)->count();
+		
+		$page = getpage($count,10);
+
 		$list = $this->join($tq.'userinfo on '.$tq.'order.uid='.$tq.'userinfo.uid','left')
 			->join($tq.'accountinfo on '.$tq.'accountinfo.uid='.$tq.'userinfo.uid','left')
 			->join($tq.'productinfo on '.$tq.'order.pid='.$tq.'productinfo.pid','left')
-			->field($liestr)->order($tq.'order.oid desc')->where($where)->select();
+			->field($liestr)->order($tq.'order.oid desc')->where($where)->limit($page->firstRow,$page->listRows)->select();
+		
 		foreach($list as $k => $v){
 				$list[$k]['buytime'] = date("Y-m-d H:m",$list[$k]['buytime']);
 				$list[$k]['selltime'] = date("Y-m-d H:m:s",$list[$k]['selltime']);
 			}
 
-			$list['sea'] =$sea; 
+
+		$list['sea'] =$sea; 
+		$list['page'] = $page->show();
+
 		return	$list;
 	}
 	/**
@@ -60,12 +70,17 @@ class OrderServerModel extends Model
 	public function get_list(){
 		$tq = C('DB_PREFIX');
 		$liestr =$tq.'order.buydpzs as buydpzs,'.$tq.'order.paymethod as paymethod,'.$tq.'order.ostaus as ostaus,'.$tq.'order.uid as uid,'.$tq.'order.selltime as selltime,'.$tq.'userinfo.username as username,'.$tq.'order.buytime as buytime,'.$tq.'order.ptitle as ptitle,'.$tq.'order.commission as commission,'.$tq.'order.oid as oid,'.$tq.'order.ploss as ploss,'.$tq.'order.onumber as onumber,'.$tq.'order.ostyle as ostyle,'.$tq.'order.fee as fee,'.$tq.'order.pid as pid,'.$tq.'order.buyprice as buyprice,'.$tq.'order.sellprice as sellprice,'.$tq.'order.orderno as orderno,'.$tq.'accountinfo.balance as balance,'.$tq.'productinfo.cid as cid,'.$tq.'productinfo.wave as wave';
-		$list =$this->join($tq.'userinfo on '.$tq.'order.uid='.$tq.'userinfo.uid','left')->join($tq.'accountinfo on '.$tq.'accountinfo.uid='.$tq.'userinfo.uid','left')->join($tq.'productinfo on '.$tq.'order.pid='.$tq.'productinfo.pid','left')->field($liestr)->where($tq.'order.ostaus=0')->order($tq.'order.oid desc')->select();
+		$count = $this->where("ostaus=0")->count();
+		$page = getpage($count,10);
+		$list =$this->join($tq.'userinfo on '.$tq.'order.uid='.$tq.'userinfo.uid','left')->join($tq.'accountinfo on '.$tq.'accountinfo.uid='.$tq.'userinfo.uid','left')->join($tq.'productinfo on '.$tq.'order.pid='.$tq.'productinfo.pid','left')->field($liestr)->where($tq.'order.ostaus=0')->order($tq.'order.oid desc')->limit($page->firstRow,$page->listRows)->select();
 		foreach($list as $k => $v){
 				$list[$k]['buytime'] = date("Y-m-d H:m:s",$list[$k]['buytime']);
 				$list[$k]['selltime'] = date("Y-m-d H:m:s",$list[$k]['selltime']);
 
 			}
+		$list['page'] = $page->show();
+
+
 		return $list; 
 	}
 	/**
@@ -86,12 +101,18 @@ class OrderServerModel extends Model
 	{
 		$tq = C('DB_PREFIX');
 		$liestr =$tq.'order.selldpzs as selldpzs,'.$tq.'order.buydpzs as buydpzs,'.$tq.'order.paymethod as paymethod,'.$tq.'order.ostaus as ostaus,'.$tq.'order.uid as uid,'.$tq.'order.selltime as selltime,'.$tq.'userinfo.username as username,'.$tq.'order.buytime as buytime,'.$tq.'order.ptitle as ptitle,'.$tq.'order.commission as commission,'.$tq.'order.oid as oid,'.$tq.'order.ploss as ploss,'.$tq.'order.onumber as onumber,'.$tq.'order.ostyle as ostyle,'.$tq.'order.fee as fee,'.$tq.'order.pid as pid,'.$tq.'order.buyprice as buyprice,'.$tq.'order.sellprice as sellprice,'.$tq.'order.orderno as orderno,'.$tq.'accountinfo.balance as balance,'.$tq.'productinfo.cid as cid,'.$tq.'productinfo.wave as wave';
-		$list =$this->join($tq.'userinfo on '.$tq.'order.uid='.$tq.'userinfo.uid','left')->join($tq.'accountinfo on '.$tq.'accountinfo.uid='.$tq.'userinfo.uid','left')->join($tq.'productinfo on '.$tq.'order.pid='.$tq.'productinfo.pid','left')->field($liestr)->where($tq.'order.ostaus=1')->order($tq.'order.oid desc')->select();
+
+		$count = $this->where("ostaus=1")->count();
+
+		$page = getpage($count,10);
+
+		$list =$this->join($tq.'userinfo on '.$tq.'order.uid='.$tq.'userinfo.uid','left')->join($tq.'accountinfo on '.$tq.'accountinfo.uid='.$tq.'userinfo.uid','left')->join($tq.'productinfo on '.$tq.'order.pid='.$tq.'productinfo.pid','left')->field($liestr)->where($tq.'order.ostaus=1')->order($tq.'order.oid desc')->limit($page->firstRow,$page->listRows)->select();
 		foreach($list as $k => $v){
 				$list[$k]['buytime'] = date("Y-m-d H:m:s",$list[$k]['buytime']);
 				$list[$k]['selltime'] = date("Y-m-d H:m:s",$list[$k]['selltime']);
 
 			}
+		$list['page'] = $page->show();
 		return $list;	
 	}
 
@@ -158,16 +179,23 @@ class OrderServerModel extends Model
 
 		
 		$where['ostaus'] ='1';
+		$count = $this->where($where)->count();
+		$page = getpage($count,10);
 
 		$list = $this->join($tq.'userinfo on '.$tq.'order.uid='.$tq.'userinfo.uid','left')
 			->join($tq.'accountinfo on '.$tq.'accountinfo.uid='.$tq.'userinfo.uid','left')
 			->join($tq.'productinfo on '.$tq.'order.pid='.$tq.'productinfo.pid','left')
-			->field($liestr)->order($tq.'order.oid desc')->where($where)->select();
+			->field($liestr)->order($tq.'order.oid desc')->where($where)->limit($page->firstRow,$page->firstRows)->select();
 		foreach($list as $k => $v){
 				$list[$k]['buytime'] = date("Y-m-d H:m",$list[$k]['buytime']);
 				$list[$k]['selltime'] = date("Y-m-d H:m:s",$list[$k]['selltime']);
 			}
-			$list['sea'] =$sea; 
+			/*foreach($sea as $k=>$v){
+				$list[$k]=$v;
+			}*/
+		$list['sea']  = $sea;
+		$list['page'] = $page->show();
+		//pre($list);
 		return	$list;
 	}
 }
