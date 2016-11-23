@@ -237,28 +237,24 @@ class UserServerController extends Controller {
     public function detailUser($id){
         $user = D('userinfo');
         $order = D('order');
+        $role = D('role');
         $account = D('accountinfo');
         $bank = D('bankinfo');
         //查询用户和账户信息
         $field = 'uid,username,nickname,utel,address,utime,oid,managername,lastlog,otype,ustatus,comname,rname,unum';
         $ulist = $user->field($field)->find($id);
-        switch($ulist['otype']){
-            case 1: $otype =  '交易所';break;
-            case 2: $otype =  '运营中心';break;
-            case 3: $otype =  '综合会员';break;
-            case 4: $otype =  '经济会员';break;
-            case 5: $otype =  '代理商';break;
-            case 6: $otype =  '经纪人';break;
-            case 7: $otype =  '客户';break;
-        }
 
+        //获得用户上级
         if($ulist['otype'] == $user::TYPE_CUSTOMER){
             $top = M('userinfo')->where('uid='.$ulist['oid'])->getField('username');
         } else {
             $top = M('userinfo')->where('uid='.$ulist['oid'])->getField('comname');
         }
         $ulist['managename'] = $top;
-        $ulist['otype'] = $otype;
+
+        //获得用户等级
+        $otype = $role->field('role_name')->where('id ='.$ulist['otype'])->find();
+        $ulist['otype'] = $otype['role_name'];
 
         //查询余额
         $account = $account->field('balance')->where('uid ='.$id)->find();
