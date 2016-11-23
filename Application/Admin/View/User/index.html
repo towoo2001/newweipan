@@ -1,18 +1,18 @@
 <style>
-    .content_index { margin:0;padding:0;width:100%; }
+    .content_index { margin:0;padding:0;width:100%;}
     .content_index span { font-size: 12px;padding-right:10px; }
-    .search_index { width:100%; }
-    .search_index ul { list-style: none;margin:0;padding:0; }
+    .search_index { width:100%; overflow: hidden; }
+    .search_index ul { list-style: none;margin:0;padding:0;  }
     .search_index ul li { height: 30px;line-height: 30px; padding:0 10px 0 0;float:left; }
     .search_index ul li input { width:150px; }
     .search_index ul li .status { width:100px; }
     .search_index ul li .type { width:100px; }
-    .list_index { clear: left;width:100%;padding-top:10px; }
+    .list_index { clear: left;width:100%;margin-top:10px; overflow: hidden; background-color: #fff;}
     .list_index dl { font-size: 12px;width:100%; margin:0;padding:0; }
-    .list_index dl dt { width:8.2%; height: 30px;line-height: 30px; float:left; border: 1px solid red; border-right:0; text-align: center;}
-    .list_index dl dt.last { border-right:1px solid red;}
-    .list_index dl dd { width: 8.2%; height: 30px;line-height: 30px; float:left; margin:0; border: 1px solid red; border-right:0;border-top:0;text-align: center; }
-    .list_index dl dd.last { border-right:1px solid red; }
+    .list_index dl dt { width: 11.7%; height: 30px;line-height: 30px; float:left; border: 1px solid #e6e6e6; border-right:0; text-align: center;}
+    .list_index .first { width:5.75%;}
+    .list_index .last { border-right:1px solid #e6e6e6;}
+    .list_index dl dd { width: 11.7%; height: 30px;line-height: 30px; float:left; margin:0; border: 1px solid #e6e6e6; border-right:0;border-top:0;text-align: center; }
     .count_index { clear: left;padding:10px 15px 0 0;float:right; }
 </style>
 <link rel="stylesheet" href="__PUBLIC__/TimeControl/css/BeatPicker.min.css">
@@ -60,33 +60,39 @@
     </div>
     <div class="list_index">
         <dl>
-            <dt>编号</dt>
-            <dt>客户名称</dt>
-            <dt>微信昵称</dt>
+            <dt class="first">编号</dt>
+            <!--<dt>客户名称</dt>-->
+            <!--<dt>微信昵称</dt>-->
             <dt>手机号码</dt>
             <dt>上级名称</dt>
-            <dt>订单数量</dt>
-            <dt>账户余额</dt>
+            <!--<dt>订单数量</dt>
+            <dt>账户余额</dt>-->
             <dt>创建日期</dt>
-            <dt>最近登录</dt>
+            <!--<dt>最近登录</dt>-->
+            <!--<dt>下级数量</dt>-->
             <dt>用户级别</dt>
-            <dt>下级数量</dt>
+            <dt>注册码</dt>
+            <dt>运营中心</dt>
+            <dt>账号状态</dt>
             <dt class="last">操作</dt>
             <div style="clear:both"></div>
             <?php foreach($ulist as $v):?>
-            <dd><?php echo $v['uid']?></dd>
-            <dd><a href="{:U('User/index')}?oid={$v['uid']}" title="点击查看所属下级"><?php echo $v['username']?></a></dd>
-            <dd><?php echo $v['nickname']?></dd>
-            <dd><?php echo $v['utel']?></dd>
-            <dd><a href="{:U('User/index')}?uid={$v['oid']}" title="点击查看上级"><?php echo $v['managername']?></a></dd>
-            <dd><?php echo $v['ocount']?></dd>
-            <dd><?php echo $v['balance']?></dd>
+            <dd class="first"><?php echo $v['uid']?></dd>
+            <!--<dd><?php echo $v['username']?></dd>-->
+            <!--<dd><?php echo $v['nickname']?></dd>-->
+            <dd><a href="{:U('User/index')}?oid={$v['uid']}" title="点击查看所属下级"><?php echo $v['utel']?></a></dd>
+            <dd><!--<a href="{:U('User/index')}?uid={$v['oid']}" title="点击查看上级">--><?php echo $v['managername']?><!--</a>--></dd>
+            <!--<dd><?php echo $v['ocount']?></dd>
+            <dd><?php echo $v['balance']?></dd>-->
             <dd><?php echo date('Y-m-d',$v['utime'])?></dd>
-            <dd><?php echo date('Y-m-d',$v['lastlog'])?></dd>
+            <!--<dd><?php echo date('Y-m-d',$v['lastlog'])?></dd>-->
+            <!--<dd><?php echo $v['lower']?></dd>-->
             <dd><?php echo $v['otype']?></dd>
-            <dd><?php echo $v['lower']?></dd>
+            <dd><?php echo $v['otype']?></dd>
+            <dd><?php echo $v['comname']?></dd>
+            <dd><?php echo $v['ustatus']?></dd>
             <dd class="last">
-                <a href="{:U('User/detail',array('uid'=>$ult['uid']))}">详情</a> |
+                <a href="{:U('User/detail',array('uid'=>$v['uid']))}">详情</a> |
                 <a href="{:U('User/update',array('uid'=>$v['uid']))}">修改</a> |
                 <a href="{:U('User/delete',array('uid'=>$v['uid']))}" onclick="if(confirm('确定要删除吗?请谨慎操作！')){return true;}else{return false;}">删除</a>
             </dd>
@@ -96,6 +102,7 @@
     <div class="count_index">
         <span>总余额：</span> xxxx <span>元</span>
     </div>
+    <div><?php echo $page;?></div>
 </div>
 <script src="__PUBLIC__/Admin/js/jquery/jQuery-2.2.0.min.js"></script>
 <script src="__PUBLIC__/TimeControl/js/BeatPicker.min.js"></script>
