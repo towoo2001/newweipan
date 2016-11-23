@@ -7,11 +7,13 @@ class UserServerController extends Controller {
      * @condition array  查询条件
      * @return boolean
      */
-    public function login($condition){
+    public function login($where){
         $user = D('userinfo');
-        $condition['ustatus'] = $user::STATUS_ON;
-        $condition['vertus'] = $user::VERTUS_ON;
-        $condition['otype'] = array('neq',$user::TYPE_CUSTOMER);
+        $role = D('role');
+        $status = $user::STATUS_ON;
+        $vertus = $user::VERTUS_ON;
+        $otype = $user::TYPE_CUSTOMER;
+        $condition = $where . " and ustatus = $status and vertus = $vertus and otype != $otype";
         $result = $user->field("uid,upwd,username,utel,utime,otype,ustatus,vertus,comname")->where($condition)->find();
         return $result;
     }
@@ -44,9 +46,9 @@ class UserServerController extends Controller {
             $sea['phone'] = $get['phone'];
         }
         //根据名称查询
-        if($get['username']) {
-            $condition .= " and username like '%".$get['username']."%'";
-            $sea['username'] = $get['username'];
+        if($get['unum']) {
+            $condition .= " and unum like '%".$get['unum']."%'";
+            $sea['unum'] = $get['unum'];
         }
         //根据时间查询
         if($get['starttime']){
@@ -72,41 +74,43 @@ class UserServerController extends Controller {
         }
         if($get['oid']){                                    // 查找所属下级
             $condition .= " and oid = ".$get['oid'];
-            $orderby = "otype desc,uid desc";
+            $orderby = "otype asc,uid desc";
             $sea['oid'] = $get['oid'];
-        } /*elseif($get['uid']){                              //查找上级
-            $condition .= " and uid = ".$get['uid'];
-        } */else {
+        } else {
             $condition .= " and oid = ".$info['uid'];
-            $orderby = "otype desc";
+            $orderby = "otype asc,uid desc";
         }
 
         $count = $user->where($condition)->count();
-        $page = getpage($count,20);
+        $page = getpage($count,10);
         //查询用户和账户信息
-        $field = 'uid,username,utel,utime,oid,managername,otype,ustatus,comname,code';
+        $field = 'uid,username,utel,utime,oid,managername,otype,ustatus,comname,code,unum';
         $ulist = $user->table($pre.'userinfo')->where($condition)->field($field)->order($orderby)->limit($page->firstRow,$page->listRows)->select();
 
         //循环用户id，操作用户信息
         foreach($ulist as $k => $v){
             $ulist[$k]['oid'] = empty($v['oid']) ? 0 : $v['oid'] ;
             $ulist[$k]['utel'] = str_replace(substr($v['utel'],3,4),'****',$v['utel']);
-            $ocount = $order->where('uid='.$v['uid'])->count();
-            $ulist[$k]['ocount'] = $ocount;                                                                     //获得订单数
+            /*$ocount = $order->where('uid='.$v['uid'])->count();
+            $ulist[$k]['ocount'] = $ocount; */                                                                    //获得订单数
             $ulist[$k]['balance'] = number_format($ulist[$k]['balance'],2);                                     //获得余额
             //$ulist[$k]['nickname'] = isset($ulist[$k]['nickname']) ? $ulist[$k]['nickname'] :'(非微信用户)';
-            $ulist[$k]['managername'] = M('userinfo')->where('uid='.$v['oid'])->getField('username');
+            if($v['otype'] == $user::TYPE_CUSTOMER){                                                            //获得上级
+                $top = M('userinfo')->where('uid='.$v['oid'])->getField('utel');
+            } else {
+                $top = M('userinfo')->where('uid='.$v['oid'])->getField('comname');
+            }
+            $ulist[$k]['managername'] = $top;
             $ulist[$k]['lower'] = M('userinfo')->where('oid='.$v['uid'])->count();                              //获得下级数量
             $ulist[$k]['ustatus'] = $v['ustatus'] == 0 ? '正常': '冻结' ;
             switch($v['otype']){
-                case 0: $otype =  '客户';break;
-                case 1: $otype =  '经纪人';break;
+                case 1: $otype =  '交易所';break;
                 case 2: $otype =  '运营中心';break;
-                case 3: $otype =  '管理员';break;
-                case 4: $otype =  '代理商';break;
-                case 5: $otype =  '交易所';break;
-                case 6: $otype =  '综合会员';break;
-                case 7: $otype =  '经济会员';break;
+                case 3: $otype =  '综合会员';break;
+                case 4: $otype =  '经济会员';break;
+                case 5: $otype =  '代理商';break;
+                case 6: $otype =  '经纪人';break;
+                case 7: $otype =  '客户';break;
             }
             $ulist[$k]['otype'] = $otype;
         }
@@ -126,6 +130,26 @@ class UserServerController extends Controller {
         return $data;
     }
 
+    //下级列表
+    public function dropDownList(){
+        $info = $_SESSION['login'];
+        $user = D('userinfo');
+        if($info['otype'] == $user::TYPE_ADMIN){
+            $otype = array($user::TYPE_CENTER => '运营中心' );
+        } elseif($info['otype'] == $user::TYPE_CENTER){
+            $otype = array($user::TYPE_COLLIGATE => '综合会员');
+        } elseif($info['otype'] == $user::TYPE_COLLIGATE){
+            $otype = array($user::TYPE_MEMBER => '经济会员',$user::TYPE_AGENCY => '代理商',$user::TYPE_AGENT => '经纪人',$user::TYPE_CUSTOMER => '客户');
+        } elseif($info['otype'] == $user::TYPE_MEMBER){
+            $otype = array($user::TYPE_AGENT => '经纪人',$user::TYPE_CUSTOMER => '客户');
+        } elseif($info['otype'] == $user::TYPE_AGENCY){
+            $otype = array($user::TYPE_AGENT => '经纪人');
+        } elseif($info['otype'] == $user::TYPE_AGENT){
+            $otype = array($user::TYPE_CUSTOMER => '客户');
+        }
+        return $otype;
+    }
+
     /**
      * 添加用户
      * @$data array 数据
@@ -133,22 +157,43 @@ class UserServerController extends Controller {
      */
     public function addUser($data){
         $user = D('userinfo');
+        $info = $_SESSION['login'];
         $result = $user->create($data);
         if(!$result){
             $this->error($user->getError());
         } else {
             $data['upwd'] = md5($data['upwd']);
             $data['utime'] = time();
-            $data['otype'] = $user::TYPE_MEMBER;
-            $data['oid']   = R('Server/UserServer/getExchangeID');
-            $data['wxtype']= 1;
-            
+
+            //添加oid
+            if($info['otype'] == $user::TYPE_ADMIN){
+                $data['oid']   = R('Server/UserServer/getExchangeID');
+            } else {
+                $data['oid'] = $info['uid'];
+            }
+
             //生成随机邀请码
             $str = array_merge(range(0,9),range('a','z'),range('A','Z'));
             shuffle($str);
             $str = strtoupper(implode('',array_slice($str,0,8)));
             $data['code'] = $str.$data['uid'];
 
+            //生成用户id编号
+            $otype = array($user::TYPE_CENTER,$user::TYPE_COLLIGATE,$user::TYPE_MEMBER,$user::TYPE_AGENCY);
+            if($info['otype'] == $user::TYPE_ADMIN){
+                $pre = 'tq_';
+                $data['unum'] = $pre.substr(uniqid(),6);
+            } elseif(in_array($info['otype'],$otype)) {
+                $comname1 = mb_substr($info['comname'],0,1,'utf-8');
+                $comname2 = mb_substr($info['comname'],1,1,'utf-8');
+                $z = strtolower(Getzimu($comname1));
+                $m = strtolower(Getzimu($comname2));
+                $pre = $z.$m.'_';
+                $data['unum'] = $pre.substr(uniqid(),6);
+            } else {
+                $pre = 'cu_';
+                $data['unum'] = $pre.substr(uniqid(),6);
+            }
             $result = $user->add($data);
             return $result;
         }
@@ -186,18 +231,25 @@ class UserServerController extends Controller {
         $account = D('accountinfo');
         $bank = D('bankinfo');
         //查询用户和账户信息
-        $field = 'uid,username,nickname,utel,address,utime,oid,managername,lastlog,otype,ustatus,comname,rname,center';
+        $field = 'uid,username,nickname,utel,address,utime,oid,managername,lastlog,otype,ustatus,comname,rname,unum';
         $ulist = $user->field($field)->find($id);
         switch($ulist['otype']){
             case 0: $otype =  '客户';break;
             case 1: $otype =  '经纪人';break;
-            case 2: $otype =  '运营中心';break;
+            case 2: $otype =  '经济会员';break;
             case 3: $otype =  '管理员';break;
             case 4: $otype =  '代理商';break;
             case 5: $otype =  '交易所';break;
-            case 6: $otype =  '综合会员';break;
-            case 7: $otype =  '经济会员';break;
+            case 6: $otype =  '运营中心';break;
+            case 7: $otype =  '综合会员';break;
         }
+
+        if($ulist['otype'] == $user::TYPE_CUSTOMER){
+            $top = M('userinfo')->where('uid='.$ulist['oid'])->getField('username');
+        } else {
+            $top = M('userinfo')->where('uid='.$ulist['oid'])->getField('comname');
+        }
+        $ulist['managename'] = $top;
         $ulist['otype'] = $otype;
 
         //查询余额
@@ -223,10 +275,22 @@ class UserServerController extends Controller {
      * @$data array 数据
      * @return boolean
      */
-    public function deleteUser($id,$arr){
+    /*public function deleteUser($id,$arr){
         $user = D('userinfo');
         $result = $user->where('uid = '.$id)->save($arr);
         return $result;
+    }*/
+
+    /**
+     * 切换状态
+     * */
+    public function statusChange($id){
+        $user = D('userinfo');
+        $status = $user->field('ustatus')->where('uid ='.$id)->find();
+        $status = $status['ustatus'];
+        $rs = $status == $user::STATUS_ON ? $user::STATUS_OFF : $user::STATUS_ON ;
+        $result = $user->where('uid ='.$id)->save(array('ustatus' => $rs));
+        return true;
     }
 
     /**
@@ -235,7 +299,7 @@ class UserServerController extends Controller {
      */
     public function getExchangeID(){
         $user = D('userinfo');
-        $type = $user::TYPE_EXCHANGE;
+        $type = $user::TYPE_ADMIN;
         $data = $user->field('uid')->where('otype = '.$type)->find();
         return $data['uid'];
     }

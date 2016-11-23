@@ -1,6 +1,7 @@
 <style>
-    .content_add { width:100%; font-size: 12px; overflow: hidden; background-color: #fff;}
-    .content_add ul { list-style: none;margin:0;padding:0; }
+    .content_add { font-size: 12px; overflow: hidden;}
+    .content_add .title { height:35px; line-height: 35px;padding-left: 5px; border: 1px solid #e6e6e6; }
+    .content_add ul { list-style: none;margin:0;padding:0; background-color: #fff; }
     .content_add ul li { height: 30px;line-height: 30px; padding:0 10px 0 0; border: 1px solid #e6e6e6; border-bottom:0 ;line-height: 30px;}
     .content_add ul li.last_li { border-bottom: 1px solid #e6e6e6;}
     .content_add ul li span { width:10%; display: inline-block;border-right: 1px solid #e6e6e6; text-align: right; padding-right:5px;}
@@ -11,10 +12,20 @@
 <div class="content_add">
     <form action="{:U(User/update)}" method="post">
         <ul>
-            <li><span>用户名:</span><input type="text" name="username" value="<?php echo $data['username']?>"/></li>
+            <div class="title">添加用户</div>
+            <li><span>用户名:</span><input type="text" name="utel" value="<?php echo $data['phone']?>"/></li>
+            <li><span>用户级别:</span>
+            <select class="select" style="width:100px;" name="otype" id="otype">
+                <?php foreach($dl as $k => $v){?>
+                    <option value="<?php echo $k?>" <?php echo $data['otype'] == $k ? selected : '' ?>><?php echo $v?></option>
+                <?php }?>
+            </select>
+            </li>
+            <div id="company">
             <li><span>公司名称:</span><input type="text" name="comname" value="<?php echo $data['comname']?>" /></li>
             <li><span>公司地址:</span><input type="text" name="address" value="<?php echo $data['address']?>" /></li>
-            <li><span>电话:</span><input type="text" name="utel" value="<?php echo $data['utel']?>" /></li>
+            </div>
+            <!--<li><span>电话:</span><input type="text" name="utel" value="<?php echo $data['utel']?>" /></li>-->
             <li><span>密码:</span><input type="password" name="upwd" value="" /></li>
             <li class="last_li"><span>确认密码:</span><input type="password" name="reupwd" value="" /></li>
         </ul>
@@ -25,3 +36,23 @@
     </form>
 </div>
 <script src="__PUBLIC__/Admin/js/jquery/jQuery-2.2.0.min.js"></script>
+<script>
+    $(function(){
+        var otype = $('#otype').val()
+        if(otype == 6 || otype == 7){
+            $('#company').hide();
+        } else {
+            $('#company').show();
+        }
+        $('#otype').change(function(){
+            var otype = $(this).val();
+            if(otype == 6 || otype == 7){
+                $('#company').hide();
+                $('#company').val('');
+                $('#address').val('');
+            } else {
+                $('#company').show();
+            }
+        });
+    });
+</script>

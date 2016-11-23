@@ -7,8 +7,9 @@ class UserController extends Controller {
      * */
     public function login(){
         if(IS_POST){
-            $condition['username'] = I('post.username');
-            $condition['upwd'] = md5(I('post.password'));
+            $user = I('post.username');
+            $pwd = md5(I('post.password'));
+            $condition = "(username = '{$user}' and upwd = '{$pwd}') or (utel = '{$user}' and upwd = '{$pwd}')";
             $result = R('Server/UserServer/login',array($condition));
             if(empty($result)){
                 $this->error('登录失败!');
@@ -66,14 +67,16 @@ class UserController extends Controller {
                 $data = R('Server/UserServer/getOneList',array($_GET['uid']));
                 $this->assign('data',$data);
             }
+            $dl = R('Server/UserServer/dropDownList');
+            $this->assign('dl',$dl);
             $this->display();
         }
     }
 
     /**
- * 删除用户
- * */
-    public function delete(){
+    * 删除用户
+    * */
+    /*public function delete(){
         $user = D('userinfo');
         $arr = array('ustatus' => $user::STATUS_OFF);
         $result = R('Server/UserServer/deleteUser',array($_GET['uid'],$arr));
@@ -82,6 +85,15 @@ class UserController extends Controller {
         } else{
             $this->error('删除失败！');
         }
+    }*/
+
+    /**
+     * 切换状态
+     * */
+    public function statusChange(){
+        $id = $_GET['uid'];
+        $result = R('Server/UserServer/statusChange',array($id));
+        $this->redirect('User/index');
     }
 
     /**
