@@ -37,6 +37,7 @@ class UserServerController extends Controller {
         $info = $_SESSION['login'];
         $pre = C('DB_PREFIX');  //表前缀
         $user = D('userinfo');
+        $role = D('role');
         $order = D('order');
 
         $condition = "1";
@@ -95,31 +96,26 @@ class UserServerController extends Controller {
         foreach($ulist as $k => $v){
             $ulist[$k]['oid'] = empty($v['oid']) ? 0 : $v['oid'] ;
             $ulist[$k]['utel'] = str_replace(substr($v['utel'],3,4),'****',$v['utel']);
-            /*$ocount = $order->where('uid='.$v['uid'])->count();
-            $ulist[$k]['ocount'] = $ocount; */                                                                    //获得订单数
-            $ulist[$k]['balance'] = number_format($ulist[$k]['balance'],2);                                     //获得余额
+            //$ocount = $order->where('uid='.$v['uid'])->count();
+            //$ulist[$k]['ocount'] = $ocount;                                                                    //获得订单数
+            //$ulist[$k]['balance'] = number_format($ulist[$k]['balance'],2);                                     //获得余额
             //$ulist[$k]['nickname'] = isset($ulist[$k]['nickname']) ? $ulist[$k]['nickname'] :'(非微信用户)';
-            if($v['otype'] == $user::TYPE_CUSTOMER){                                                            //获得上级
+            //获得上级
+            if($v['otype'] == $user::TYPE_CUSTOMER){
                 $top = M('userinfo')->where('uid='.$v['oid'])->getField('utel');
             } else {
                 $top = M('userinfo')->where('uid='.$v['oid'])->getField('comname');
             }
             $ulist[$k]['managername'] = $top;
-            $ulist[$k]['lower'] = M('userinfo')->where('oid='.$v['uid'])->count();                              //获得下级数量
+            //获得下级数量
+            $ulist[$k]['lower'] = M('userinfo')->where('oid='.$v['uid'])->count();
+            //用户状态
             $ulist[$k]['ustatus'] = $v['ustatus'] == 0 ? '正常': '冻结' ;
-            switch($v['otype']){
-                case 1: $otype =  '交易所';break;
-                case 2: $otype =  '运营中心';break;
-                case 3: $otype =  '综合会员';break;
-                case 4: $otype =  '经济会员';break;
-                case 5: $otype =  '代理商';break;
-                case 6: $otype =  '经纪人';break;
-                case 7: $otype =  '客户';break;
-            }
-            $ulist[$k]['otype'] = $otype;
+            //获得用户等级
+            $otype = $role->field('role_name')->where('id ='.$v['otype'])->find();
+            $ulist[$k]['otype'] = $otype['role_name'];
         }
-
-        //
+        //用户等级列表
         $type = $this->userType();
         $ulist = array('ulist' => $ulist,'sea' => $sea,'page' => $page->show(),'type' => $type);
         return $ulist;
@@ -136,7 +132,7 @@ class UserServerController extends Controller {
         return $data;
     }
 
-    //用户等级
+    //用户等级列表
     public function userType(){
         $role = D('role');
         $data = $role->field('id,role_name')->where('role_type ='.$role::USER)->select();
