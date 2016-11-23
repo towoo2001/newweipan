@@ -15,7 +15,7 @@ class UserController extends Controller {
                 $this->error('登录失败!');
             } else {
                 $id = $result['uid'];
-                $arr = array('uid' => $id,'username' => $result['username'],'otype' => $result['otype'],'comname' => $result['comname']);
+                $arr = array('uid' => $id,'username' => $result['username'],'utel' => $result['utel'],'otype' => $result['otype'],'comname' => $result['comname']);
                 $data['lastlog'] = time();
                 //记录登录时间
                 R('Server/UserServer/lastLogin',array($id,$data));
@@ -92,9 +92,13 @@ class UserController extends Controller {
      * 切换状态
      * */
     public function statusChange(){
-        $id = $_GET['uid'];
+        $id = $_GET['id'];
         $result = R('Server/UserServer/statusChange',array($id));
-        $this->redirect('User/index');
+        $rs = array(
+            'errorcode' => 0,
+            'erroemsg'  => 'ok',
+        );
+        $this->ajaxReturn($rs);
     }
 
     /**

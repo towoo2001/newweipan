@@ -28,7 +28,7 @@
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="__PUBLIC__/Admin/images/user2-160x160.jpg" class="user-image" alt="User Image">
-                                <span class="hidden-xs"><?php echo $_SESSION['login']['username']?></span>
+                                <span class="hidden-xs"><?php echo empty($_SESSION['login']['username'])? $_SESSION['login']['utel'] : $_SESSION['login']['username'] ?></span>
                             </a>
                             <ul class="dropdown-menu pull-right">
                                 <li><a class="menuItem" data-id="userInfo" href="/SystemManage/User/Info"><i class="fa fa-user"></i>个人信息</a></li>
@@ -50,7 +50,7 @@
                         <img src="__PUBLIC__/Admin/images/user2-160x160.jpg" class="img-circle" alt="User Image">
                     </div>
                     <div class="pull-left info">
-                        <p><?php echo $_SESSION['login']['username']?></p>
+                        <p><?php echo empty($_SESSION['login']['username'])? $_SESSION['login']['utel'] : $_SESSION['login']['username'] ?></p>
                         <a><i class="fa fa-circle text-success"></i>在线</a>
                     </div>
                 </div>
@@ -76,7 +76,7 @@
                 </button>
                 <nav class="page-tabs menuTabs">
                     <div class="page-tabs-content" style="margin-left: 0px;">
-                        <a href="javascript:;" class="menuTab active" data-id="/Home/Default">欢迎首页</a>
+                        <a href="<?php echo U('Index/index')?>" class="menuTab active" data-id="/Home/Default">欢迎首页</a>
                     </div>
                 </nav>
                 <button class="roll-nav roll-right tabRight" id="go">
