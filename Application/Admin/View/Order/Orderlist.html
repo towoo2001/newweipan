@@ -10,87 +10,12 @@
     <link rel="stylesheet" href="__PUBLIC__/Admin/css/index.css">
     <script src="__PUBLIC__/Admin/js/jquery/jQuery-2.2.0.min.js"></script>
     <script src="__PUBLIC__/Admin/js/charts/Chart.js"></script>
+
     <style type="text/css">
             td{ border:1px solid #ccc; background:#fff;}
             th{background:#fff;}
             .add{ padding:0 20px; font-weight:bload;}
     </style>
-    <script>
-        $(function () {
-            Canvas1();
-            Canvas2();
-            Canvas3();
-        });
-        function Canvas1() {
-            var randomScalingFactor = function () { return Math.round(Math.random() * 100) };
-            var doughnutData = [
-                {
-                    value: randomScalingFactor(),
-                    color: "#F7464A",
-                    highlight: "#FF5A5E",
-                    label: "事假"
-                },
-                {
-                    value: randomScalingFactor(),
-                    color: "#46BFBD",
-                    highlight: "#5AD3D1",
-                    label: "病假"
-                },
-                {
-                    value: randomScalingFactor(),
-                    color: "#FDB45C",
-                    highlight: "#FFC870",
-                    label: "公休假"
-                },
-                {
-                    value: randomScalingFactor(),
-                    color: "#949FB1",
-                    highlight: "#A8B3C5",
-                    label: "调休假"
-                }
-            ];
-            var ctx = document.getElementById("Canvas1").getContext("2d");
-            window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, { responsive: false });
-        }
-        function Canvas2() {
-            var randomScalingFactor = function () { return Math.round(Math.random() * 100) };
-            var lineChartData = {
-                labels: ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
-                datasets: [
-                    {
-                        fillColor: "rgba(220,220,220,0.2)",
-                        strokeColor: "rgba(220,220,220,1)",
-                        pointColor: "rgba(220,220,220,1)",
-                        pointStrokeColor: "#fff",
-                        pointHighlightFill: "#fff",
-                        pointHighlightStroke: "rgba(220,220,220,1)",
-                        data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
-                    }
-                ]
-            }
-            var ctx = document.getElementById("Canvas2").getContext("2d");
-            window.myLine = new Chart(ctx).Line(lineChartData, {
-                bezierCurve: false,
-            });
-        }
-        function Canvas3() {
-            var randomScalingFactor = function () { return Math.round(Math.random() * 100) };
-            var lineChartData = {
-                labels: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "8月", "10月", "11月", "12月"],
-                datasets: [
-                    {
-                        fillColor: "#578ebe",
-                        data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
-                    }
-                ]
-            }
-            var ctx = document.getElementById("Canvas3").getContext("2d");
-            window.myLine = new Chart(ctx).Bar(lineChartData, {
-                bezierCurve: false,
-             
-            });
-        }
-    </script>
 </head>
 <body>
     <div id="areascontent">
@@ -109,6 +34,7 @@
                 手机号：<input type="text"  class="span6 search" placeholder="请输入手机号称查找..." name="utel" id="utel" value="{$list[sea][utel]}"/>
                 商品名：<input type="text"  class="span6 search" placeholder="请输入商品名称查找..." name="ptitle" id="ptitle" value="{$list[sea][ptitle]}"/>
                 所属会员单位名称:<input type="text"   class="span6 search" placeholder="待定" name="otype" id="otype"  />
+                
                     </div>
                 <div class="span10 pull-left" style="margin-top: 20px;">
                     <div class="tpsearch" style="width: 25%">
@@ -146,16 +72,12 @@
                 </div>
                 <div class="span10 pull-left" style="margin-top: 20px;">
                 <button type="submit">查找</button>
-                    
-                    <!-- <a href="javascript:void(0)"  onclick="sub()">查找导出</a> -->
+                <input type="reset" name="button2" value="重置">    
                 </div>
                 </form>
             <table class="table table-hover">
                     <thead>
-                            <tr>
-                                <td colspan="15"><!-- <span class="add"><a href="<?php echo U('Privilege/addPrivilege')?>">添加权限</a></span> --></td>
-                            </tr>
-                        
+                                                
                             <tr>
                                 <th>
                                     <span class="line"></span>结算日期
@@ -213,7 +135,11 @@
                         
                         <tbody>
                         
-                       <?php foreach($list as $v){?>
+                       <?php foreach($list as $k=>$v):
+
+                                if($k=='page'|| $k=='sea'){
+                                continue;  }?>
+                     
                         <tr class="first">
                             <td>
                                <?php echo $v['selltime']?> 
@@ -269,16 +195,22 @@
                             <td align="center">
                                <?php echo $v['fee']?>
                             </td>
+
+
                             <td align="center">
                                 <a href="<?php echo U('Order/details',array('oid'=>$v['oid']))?>">查看</a>
-                                
-                                    
                                  
                             </td>
                         </tr>
-                        <?php } ?>
-                                        
+
+                       <?php endforeach;?>
+                        <tr>
+                             <td colspan="15"> <?php  echo $list['page']?></td>
+                        </tr>
+
+
                         </tbody>
+
                     </table>
 
             

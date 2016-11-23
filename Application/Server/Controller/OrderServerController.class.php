@@ -61,6 +61,18 @@ class OrderServerController extends Controller
        return $list;
 
     }
+    /**
+     * 成交搜索列表
+     * @return [type] [description]
+     */
+    public function oseach()
+    {
+     	 
+       $model = new OrderServerModel();
+       $list = $model->seach_olist();
+       return $list;
+
+    }
 
     
 
