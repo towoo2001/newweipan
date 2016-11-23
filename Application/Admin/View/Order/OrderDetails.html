@@ -97,44 +97,7 @@
     <div id="areascontent">
         <div class="rows" style="margin-bottom: 0.8%; overflow: hidden;">
                 <form id="form1" action="__URL__/tlist" method="get">
-                <h3 style="height:40px;width: 100%">订单流水</h3>
-                    <div class="tpsearch" >
-                        订单编号：<input type="text" class="span6 search" placeholder="请输入订单编号查找..." name="orderno" id="orderno"/>
-                    </div>
-                    <div class="tpsearch" >
-                        用户名称：<input type="text" value="{$sea.username}" class="span6 search" placeholder="请输入用户名称查找..." name="username" id="username"/>
-                    </div>
-                
-                <div class="span10 pull-left" style="margin-top: 20px;">
-                    <div class="tpsearch" style="width: 25%">
-                        订单类型：<select id="ostyle"  name="ostyle">
-                                    <option value="">默认不选</option>
-                                    <option value="0">买涨</option>
-                                    <option value="1">买跌</option>
-                                </select>
-                    </div>
-                    <div class="tpsearch" style="width: 25%">
-                        订单盈亏：<select id="ploss"  name="ploss">
-                                    <option value="">默认不选</option>
-                                    <option value="0">盈利</option>
-                                    <option value="1">亏损</option>
-                                </select>
-                    </div>
-                    <div class="tpsearch" style="width: 25%">
-                        订单状态：<select name="ostaus" id="ostaus" >
-                                    <option value="">默认不选</option>
-                                    <option value="4">建仓</option>
-                                    <option value="1">平仓</option>
-                                    <option value="2">爆仓</option>
-                                    <option value="3">隔夜利息扣除</option>
-                                    
-                                </select>
-                    </div>
-                </div>
-                <div class="span10 pull-left" style="margin-top: 20px;">
-                    <a href="javascript:void(0)"  onclick="javascript:$('#form1').submit();">开始查找</a>
-                    <!-- <a href="javascript:void(0)"  onclick="sub()">查找导出</a> -->
-                </div>
+                <h3 style="height:40px;width: 100%">订单详情</h3>
                 </form>
             <table class="table table-hover" style='width: 400px'>
                     <thead>
@@ -164,19 +127,32 @@
                                 <th>
                                     <span class="line"></span>交易方向
                                 </th>
-                                <td ><?php if($list['ostyle']==0) echo '做多';else echo '做空';?> </td>
+                                <td>
+                                <if condition="$list['ostyle'] eq '0'">
+                                <font color="#2fb44e">做空</font>
+                                <elseif condition="$list['ostyle'] eq '1'"/>
+                                <font color="#ed0000">做多</font>
+                                <else/>
+                                </if>
+                            </td>  
                             </tr>
                             <tr>
                                 <th>
                                     <span class="line"></span>支付方式
                                 </th>
-                                <td style='color: red'>支付方式</td>
+                                <td style='color: red'>
+                                <if condition="$list['paymethod'] eq '0'">
+                                <font color="#2fb44e">银联</font>
+                                <elseif condition="$list['paymethod'] eq '1'"/>
+                                <font color="#ed0000">微信</font>
+                                <else/>
+                                </if></td>
                             </tr>
                             <tr>
                                 <th>
                                     <span class="line"></span>建仓时间
                                 </th>
-                                <td ><?php echo $list['buytime']?> </td>
+                                <td ><?php echo  date("Y-m-d H:m:s",$list['buytime']) ?> </td>
                             </tr>
                             <tr>
                                 <th>
@@ -188,7 +164,7 @@
                                 <th>
                                     <span class="line"></span>建仓点位
                                 </th>
-                                <td style="color: red">大盘点数</td>
+                                <td ><?php echo $list['buydpzs']?> </td>
                             </tr>
                             <tr>
                                 <th>

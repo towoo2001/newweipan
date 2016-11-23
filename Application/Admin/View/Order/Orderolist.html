@@ -96,7 +96,7 @@
     <div id="areascontent">
         <div class="rows" style="margin-bottom: 0.8%; overflow: hidden;">
                 <form id="form1" action="__URL__/Orderolist" method="get">
-                <h3 style="height:40px;width: 100%">订单流水</h3>
+                <h3 style="height:40px;width: 100%">成交订单列表</h3>
                     <div class="tpsearch" >
                         订单编号：<input type="text" class="span6 search" placeholder="请输入订单编号查找..." name="orderno" id="orderno"/>
                     </div>
@@ -246,11 +246,22 @@
                             <td align="center">
                                <?php echo $v['onumber']?>
                             </td>
-                            <td align="center" style="color: red">
-                               支付方式
+                            <td align="center">
+                            <?php echo $v['paymethod']?>
+                                <if condition="$v['paymethod'] eq '0'">
+                                <font color="#2fb44e">银联</font>
+                                <elseif condition="$v['paymethod'] eq '1'"/>
+                                <font color="#ed0000">微信</font>
+                                <else/>
+                                </if>
                             </td>
                             <td align="center">
-                               <?php if($v['ostyle']==0){echo'做多';}else{echo '做空';}?>
+                               <if condition="$v['ostyle'] eq '0'">
+                                <font color="#2fb44e">做空</font>
+                                <elseif condition="$v['ostyle'] eq '1'"/>
+                                <font color="#ed0000">做多</font>
+                                <else/>
+                                </if>
                             </td>                          
                             <td align="center">
                                <?php echo $v['buytime']?>
@@ -259,10 +270,10 @@
                                <?php echo $v['buyprice']?>
                             </td>
                             <td align="center" style="color: red">
-                               建仓大盘点位
+                              <?php echo $v['buydpzs']?>
                             </td>
                             <td align="center" style="color: red">
-                               平仓大盘点位
+                               <?php echo $v['selldpzs']?>
                             </td>
                             <td align="center">
                                <?php echo $v['selltime']?>
@@ -277,7 +288,7 @@
                                <?php echo $v['fee']?>
                             </td>
                             <td align="center">
-                                <a href="{:U('Order/odetails',array('uid'=>$v['uid']))}">查看</a>
+                                <a href="<?php echo U('Order/odetails',array('oid'=>$v['oid']))?>">查看</a>
                                 
                                     
                                  

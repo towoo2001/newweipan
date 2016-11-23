@@ -115,19 +115,19 @@
                         交易方向：<select id="ostyle"  name="ostyle">
                                     <option value="">默认不选</option>
                                     <if condition="$list[sea][ostyle] eq '0' ">
-                                    <option value="0" selected>做多</option>
+                                    <option value="0" selected>做空</option>
                                     <else/>
-                                    <option value="0">做多</option>
+                                    <option value="0">做空</option>
                                     </if>
                                     <if condition="$list[sea][ostyle] eq '1' ">
-                                    <option value="1" selected>做空</option>
+                                    <option value="1" selected>做多</option>
                                     <else/>
-                                    <option value="1">做空</option>
+                                    <option value="1">做多</option>
                                     </if>
                                 </select>
                     </div>
                     <div class="tpsearch" style="width: 25%">
-                        支付方式：<select id="paymethod"  name="paymethod">
+                       支付方式： <select id="paymethod"  name="paymethod">
                                     <option value="">默认不选</option>
                                     <if condition="$list[sea][paymethod] eq '0'">
                                     <option value='0' selected>银联</option>
@@ -238,6 +238,7 @@
                                <?php echo $v['onumber']?>
                             </td>
                             <td>
+
 								<if condition="$v['paymethod'] eq '0'">
 								<font color="#2fb44e">银联</font>
 								<elseif condition="$v['paymethod'] eq '1'"/>
@@ -269,7 +270,7 @@
                                <?php echo $v['fee']?>
                             </td>
                             <td align="center">
-                                <a href="{:U('Order/details',array('uid'=>$v['uid']))}">查看</a>
+                                <a href="<?php echo U('Order/details',array('oid'=>$v['oid']))?>">查看</a>
                                 
                                     
                                  
