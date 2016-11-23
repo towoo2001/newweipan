@@ -55,11 +55,11 @@ class PrivServerController extends Controller {
         return $list;
     }
     public function getAdmin(){
+        $role = D('role');
         $sql = "select group_concat(concat(id)) as ids from wp_role";
         $ids = M()->query($sql);
         empty($ids[0]['ids']) ? $this->error('请添加角色') : $ids = $ids[0]['ids'];
-        
-        $list = M('Userinfo')->field("a.uid,a.upwd,a.username,b.role_name")->join("a left join wp_role b on a.otype = b.id")->where("a.otype in ({$ids})")->select();
+        $list = M('Userinfo')->field("a.uid,a.upwd,a.username,b.role_name")->join("a left join wp_role b on a.otype = b.id")->where("a.otype in ({$ids}) and a.otype = ".$role::SYSTEM)->select();
         return $list;
     }
     public function getAdminRow($id){
