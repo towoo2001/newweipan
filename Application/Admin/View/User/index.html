@@ -48,11 +48,11 @@
                     </select>
                 </li>
                 <li>
-                    <span>用户级别</span><select name="type" class="type">
-                    <option value=""></option>
-                    <option value=""></option>
-                    <option value=""></option>
-                    <option value=""></option>
+                    <span>用户级别</span><select name="otype" class="otype">
+                        <option value="0">全部</option>
+                        <?php foreach($type as $v) {?>
+                        <option value="<?php echo $v['id']?>" <?php echo $sea['otype'] == $v['id'] ? selected : '' ?>><?php echo $v['role_name']?></option>
+                        <?php }?>
                     </select>
                 </li>
                 <li style="width:7.6%;float:right;">

@@ -68,6 +68,10 @@ class UserServerController extends Controller {
             $sea['starttime'] = $get['starttime'];
             $sea['endtime'] = $get['endtime'];
         }
+        if($get['otype']){
+            $condition .= " and otype =".$get['otype'];
+            $sea['otype'] = $get['otype'];
+        }
         if($get['status']){
             $status = $get['status']-1;
             $condition .= " and ustatus = {$status}";
@@ -115,7 +119,9 @@ class UserServerController extends Controller {
             $ulist[$k]['otype'] = $otype;
         }
 
-        $ulist = array('ulist' => $ulist,'sea' => $sea,'page' => $page->show());
+        //
+        $type = $this->userType();
+        $ulist = array('ulist' => $ulist,'sea' => $sea,'page' => $page->show(),'type' => $type);
         return $ulist;
     }
 
@@ -127,6 +133,13 @@ class UserServerController extends Controller {
     public function getOneList($id){
         $user = D('userinfo');
         $data = $user->find($id);
+        return $data;
+    }
+
+    //用户等级
+    public function userType(){
+        $role = D('role');
+        $data = $role->field('id,role_name')->where('role_type ='.$role::USER)->select();
         return $data;
     }
 
@@ -234,14 +247,13 @@ class UserServerController extends Controller {
         $field = 'uid,username,nickname,utel,address,utime,oid,managername,lastlog,otype,ustatus,comname,rname,unum';
         $ulist = $user->field($field)->find($id);
         switch($ulist['otype']){
-            case 0: $otype =  '客户';break;
-            case 1: $otype =  '经纪人';break;
-            case 2: $otype =  '经济会员';break;
-            case 3: $otype =  '管理员';break;
-            case 4: $otype =  '代理商';break;
-            case 5: $otype =  '交易所';break;
-            case 6: $otype =  '运营中心';break;
-            case 7: $otype =  '综合会员';break;
+            case 1: $otype =  '交易所';break;
+            case 2: $otype =  '运营中心';break;
+            case 3: $otype =  '综合会员';break;
+            case 4: $otype =  '经济会员';break;
+            case 5: $otype =  '代理商';break;
+            case 6: $otype =  '经纪人';break;
+            case 7: $otype =  '客户';break;
         }
 
         if($ulist['otype'] == $user::TYPE_CUSTOMER){

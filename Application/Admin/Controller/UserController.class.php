@@ -37,6 +37,7 @@ class UserController extends Controller {
         $this->assign('ulist',$ulist['ulist']);
         $this->assign('sea',$ulist['sea']);
         $this->assign('page',$ulist['page']);
+        $this->assign('type',$ulist['type']);
         $this->display();
     }
 
