@@ -13,6 +13,7 @@ class OrderController extends BaseController
     {
         
         if(IS_POST){
+
             $list = R('Server/OrderServer/seach');
             
         }else {
@@ -39,7 +40,8 @@ class OrderController extends BaseController
     public function Orderolist()
     {
         if(IS_POST){
-            $list = R('Server/OrderServer/seach');
+            
+            $list = R('Server/OrderServer/oseach');
         
         }else {
             $list = R('Server/OrderServer/Orderolist');

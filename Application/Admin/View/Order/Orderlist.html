@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="__PUBLIC__/Admin/css/index.css">
     <script src="__PUBLIC__/Admin/js/jquery/jQuery-2.2.0.min.js"></script>
     <script src="__PUBLIC__/Admin/js/charts/Chart.js"></script>
+
+     <link rel="stylesheet" href="__PUBLIC__/Time/css/BeatPicker.min.css"/>
+    <script src="__PUBLIC__/Time/js/jquery-1.11.0.min.js"></script>
+    <script src="__PUBLIC__/Time/js/BeatPicker.min.js"></script>
     <style type="text/css">
             td{ border:1px solid #ccc; background:#fff;}
             th{background:#fff;}
@@ -109,6 +113,7 @@
                 手机号：<input type="text"  class="span6 search" placeholder="请输入手机号称查找..." name="utel" id="utel" value="{$list[sea][utel]}"/>
                 商品名：<input type="text"  class="span6 search" placeholder="请输入商品名称查找..." name="ptitle" id="ptitle" value="{$list[sea][ptitle]}"/>
                 所属会员单位名称:<input type="text"   class="span6 search" placeholder="待定" name="otype" id="otype"  />
+                <input type="text" data-beatpicker="true" name="xxxx"/>
                     </div>
                 <div class="span10 pull-left" style="margin-top: 20px;">
                     <div class="tpsearch" style="width: 25%">

@@ -10,144 +10,74 @@
     <link rel="stylesheet" href="__PUBLIC__/Admin/css/index.css">
     <script src="__PUBLIC__/Admin/js/jquery/jQuery-2.2.0.min.js"></script>
     <script src="__PUBLIC__/Admin/js/charts/Chart.js"></script>
+
+    <link rel="stylesheet" href="__PUBLIC__/Time/css/BeatPicker.min.css"/>
+    <script src="__PUBLIC__/Time/js/jquery-1.11.0.min.js"></script>
+    <script src="__PUBLIC__/Time/js/BeatPicker.min.js"></script>
     <style type="text/css">
             td{ border:1px solid #ccc; background:#fff;}
             th{background:#fff;}
             .add{ padding:0 20px; font-weight:bload;}
     </style>
-    <script>
-        $(function () {
-            Canvas1();
-            Canvas2();
-            Canvas3();
-        });
-        function Canvas1() {
-            var randomScalingFactor = function () { return Math.round(Math.random() * 100) };
-            var doughnutData = [
-                {
-                    value: randomScalingFactor(),
-                    color: "#F7464A",
-                    highlight: "#FF5A5E",
-                    label: "事假"
-                },
-                {
-                    value: randomScalingFactor(),
-                    color: "#46BFBD",
-                    highlight: "#5AD3D1",
-                    label: "病假"
-                },
-                {
-                    value: randomScalingFactor(),
-                    color: "#FDB45C",
-                    highlight: "#FFC870",
-                    label: "公休假"
-                },
-                {
-                    value: randomScalingFactor(),
-                    color: "#949FB1",
-                    highlight: "#A8B3C5",
-                    label: "调休假"
-                }
-            ];
-            var ctx = document.getElementById("Canvas1").getContext("2d");
-            window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, { responsive: false });
-        }
-        function Canvas2() {
-            var randomScalingFactor = function () { return Math.round(Math.random() * 100) };
-            var lineChartData = {
-                labels: ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
-                datasets: [
-                    {
-                        fillColor: "rgba(220,220,220,0.2)",
-                        strokeColor: "rgba(220,220,220,1)",
-                        pointColor: "rgba(220,220,220,1)",
-                        pointStrokeColor: "#fff",
-                        pointHighlightFill: "#fff",
-                        pointHighlightStroke: "rgba(220,220,220,1)",
-                        data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
-                    }
-                ]
-            }
-            var ctx = document.getElementById("Canvas2").getContext("2d");
-            window.myLine = new Chart(ctx).Line(lineChartData, {
-                bezierCurve: false,
-            });
-        }
-        function Canvas3() {
-            var randomScalingFactor = function () { return Math.round(Math.random() * 100) };
-            var lineChartData = {
-                labels: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "8月", "10月", "11月", "12月"],
-                datasets: [
-                    {
-                        fillColor: "#578ebe",
-                        data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
-                    }
-                ]
-            }
-            var ctx = document.getElementById("Canvas3").getContext("2d");
-            window.myLine = new Chart(ctx).Bar(lineChartData, {
-                bezierCurve: false,
-             
-            });
-        }
-    </script>
+    
 </head>
 <body>
     <div id="areascontent">
         <div class="rows" style="margin-bottom: 0.8%; overflow: hidden;">
-                <form id="form1" action="__URL__/Orderolist" method="get">
+                <form id="form1" action="__URL__/Orderolist" method="post" >
                 <h3 style="height:40px;width: 100%">成交订单列表</h3>
                     <div class="tpsearch" >
-                        订单编号：<input type="text" class="span6 search" placeholder="请输入订单编号查找..." name="orderno" id="orderno"/>
+                        订单编号：<input type="text" class="span6 search" placeholder="请输入订单编号查找..." name="orderno" id="orderno" value="{$list[sea][orderno]}"/>
                     </div>
                     <div class="tpsearch" >
-                        用户名称：<input type="text" value="{$sea.username}" class="span6 search" placeholder="请输入用户名称查找..." name="username" id="username"/>
+                        用户名称：<input type="text" value="{$sea.username}" class="span6 search" placeholder="请输入用户名称查找..." name="username" id="username" value="{$list[sea][username]}"/>
                     </div>
                  用户id：<input type="text"  class="span6 search" placeholder="请输入用户id称查找..." name="uid" id="uid"/>
-                    </div>
                 手机号：<input type="text"  class="span6 search" placeholder="请输入手机号称查找..." name="utel" id="utel"/>
                 商品名：<input type="text"  class="span6 search" placeholder="请输入商品名称查找..." name="ptitle" id="ptitle"/>
+
                 代理/经纪人:<input type="text"   class="span6 search" placeholder="待定" name="otype" id="otype"  />
-             <div class="tpsearch">
-                 	交易时间：<input type="text" value="03/29/2014" class="input-large datepicker" style="margin-bottom: 0;" name="buytime" id="buytime">
-                 </div>      
+                 开始时间:<input type="text" data-beatpicker="true" name="strtime" id="strtime" value="{$list['sea'][strtime]}" />
+                 结束时间:<input type="text" data-beatpicker="true" name="endtime" id="endtime" value="{$list['sea'][endtime]}" />
+                    </div>
+
+
+                       
                 <div class="span10 pull-left" style="margin-top: 20px;">
                     <div class="tpsearch" style="width: 25%">
                         交易方向：<select id="ostyle"  name="ostyle">
-                                    <option value="">默认不选</option>
-                                    <option value="0">买涨</option>
-                                    <option value="1">买跌</option>
+                                   <option value="">默认不选</option>
+                                    <if condition="$list[sea][ostyle] eq '0' ">
+                                    <option value="0" selected>做空</option>
+                                    <else/>
+                                    <option value="0">做空</option>
+                                    </if>
+                                    <if condition="$list[sea][ostyle] eq '1' ">
+                                    <option value="1" selected>做多</option>
+                                    <else/>
+                                    <option value="1">做多</option>
+                                    </if>
                                 </select>
                     </div>
                               <div class="tpsearch" style="width: 25%">
-                        支付方式：<select id="ploss"  name="ploss">
+                        支付方式：<select id="paymethod"  name="paymethod">
                                     <option value="">默认不选</option>
-                                    <option value="0">银联</option>
-                                    <option value="1">支付宝</option>
-                                    <option value="2">微信</option>
+                                    <if condition="$list[sea][paymethod] eq '0'">
+                                    <option value='0' selected>银联</option>
+                                    <else/>
+                                    <option value='0'>银联</option>
+                                    </if>
+                                    <if condition="$list[sea][paymethod] eq '1'">                                    
+                                    <option value='1' selected>微信</option>
+                                    <else/>
+                                    <option value='1'> 微信</option>
+                                    </if>
                                 </select>
                     </div>
-                    <div class="tpsearch" style="width: 25%">
-                        订单盈亏：<select id="ploss"  name="ploss">
-                                    <option value="">默认不选</option>
-                                    <option value="0">盈利</option>
-                                    <option value="1">亏损</option>
-                                </select>
-                    </div>
-                    <div class="tpsearch" style="width: 25%">
-                        订单状态：<select name="ostaus" id="ostaus" >
-                                    <option value="">默认不选</option>
-                                    <option value="4">建仓</option>
-                                     <option value="1">平仓</option>
-                                    <option value="2">爆仓</option>
-                                    <option value="3">隔夜利息扣除</option>
-                                    
-                                </select>
-                    </div>
+
                 </div>
                 <div class="span10 pull-left" style="margin-top: 20px;">
-                    <a href="javascript:void(0)"  onclick="javascript:$('#form1').submit();">开始查找</a>
-                    <!-- <a href="javascript:void(0)"  onclick="sub()">查找导出</a> -->
+                    <button type="submit">查找</button>
                 </div>
                 </form>
             <table class="table table-hover">
@@ -247,7 +177,6 @@
                                <?php echo $v['onumber']?>
                             </td>
                             <td align="center">
-                            <?php echo $v['paymethod']?>
                                 <if condition="$v['paymethod'] eq '0'">
                                 <font color="#2fb44e">银联</font>
                                 <elseif condition="$v['paymethod'] eq '1'"/>
@@ -304,18 +233,7 @@
         </div>
 
 
-        <div class="rows" style="overflow: hidden;">
-
-
-
-        </div>
     </div>
    
 </body>
-<script type="text/javascript">
-function{
- $('#form1').submit();   
-}
-
-</script>
 </html>

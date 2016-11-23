@@ -132,12 +132,15 @@
                                 </th>
                                 <td >
                                 <?php echo $list['paymethod']?>
+
                                 <if condition="$list['paymethod'] eq '0'">
                                 <font color="#2fb44e">银联</font>
                                 <elseif condition="$list['paymethod'] eq '1'"/>
                                 <font color="#ed0000">微信</font>
                                 <else/>
                                 </if>
+
+
                                 </td>
                             </tr>
                             <tr>
@@ -216,7 +219,7 @@
                                 <th>
                                     <span class="line"></span>客户姓名
                                 </th>
-                                <td >------ </td>
+                                <td ><?php echo $list['username']?></td>
                             </tr>
                             <tr>
                                 <th>
