@@ -16,88 +16,13 @@
 
             .add{ padding:0 20px; font-weight:bload;}
     </style>
-    <script>
-        $(function () {
-            Canvas1();
-            Canvas2();
-            Canvas3();
-        });
-        function Canvas1() {
-            var randomScalingFactor = function () { return Math.round(Math.random() * 100) };
-            var doughnutData = [
-                {
-                    value: randomScalingFactor(),
-                    color: "#F7464A",
-                    highlight: "#FF5A5E",
-                    label: "事假"
-                },
-                {
-                    value: randomScalingFactor(),
-                    color: "#46BFBD",
-                    highlight: "#5AD3D1",
-                    label: "病假"
-                },
-                {
-                    value: randomScalingFactor(),
-                    color: "#FDB45C",
-                    highlight: "#FFC870",
-                    label: "公休假"
-                },
-                {
-                    value: randomScalingFactor(),
-                    color: "#949FB1",
-                    highlight: "#A8B3C5",
-                    label: "调休假"
-                }
-            ];
-            var ctx = document.getElementById("Canvas1").getContext("2d");
-            window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, { responsive: false });
-        }
-        function Canvas2() {
-            var randomScalingFactor = function () { return Math.round(Math.random() * 100) };
-            var lineChartData = {
-                labels: ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
-                datasets: [
-                    {
-                        fillColor: "rgba(220,220,220,0.2)",
-                        strokeColor: "rgba(220,220,220,1)",
-                        pointColor: "rgba(220,220,220,1)",
-                        pointStrokeColor: "#fff",
-                        pointHighlightFill: "#fff",
-                        pointHighlightStroke: "rgba(220,220,220,1)",
-                        data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
-                    }
-                ]
-            }
-            var ctx = document.getElementById("Canvas2").getContext("2d");
-            window.myLine = new Chart(ctx).Line(lineChartData, {
-                bezierCurve: false,
-            });
-        }
-        function Canvas3() {
-            var randomScalingFactor = function () { return Math.round(Math.random() * 100) };
-            var lineChartData = {
-                labels: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "8月", "10月", "11月", "12月"],
-                datasets: [
-                    {
-                        fillColor: "#578ebe",
-                        data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
-                    }
-                ]
-            }
-            var ctx = document.getElementById("Canvas3").getContext("2d");
-            window.myLine = new Chart(ctx).Bar(lineChartData, {
-                bezierCurve: false,
-             
-            });
-        }
-    </script>
+   
 </head>
 <body>
     <div id="areascontent">
         <div class="rows" style="margin-bottom: 0.8%; overflow: hidden;">
                 <form id="form1" action="__URL__/tlist" method="get">
-                <h3 style="height:40px;width: 100%">成单订单详情</h3>
+                <h3 style="height:40px;width: 100%">成交订单详情</h3>
                 </form>
             <table class="table table-hover" style='width: 600px'>
                     <thead>
@@ -147,7 +72,7 @@
                                 <th>
                                     <span class="line"></span>建仓时间
                                 </th>
-                                <td ><?php echo $list['buytime']?> </td>
+                                <td ><?php echo date('Y-m-d H:m:s',$list['buytime'])?> </td>
                             </tr>
                             <tr>
                                 <th>
@@ -159,7 +84,7 @@
                                 <th>
                                     <span class="line"></span>建仓点位
                                 </th>
-                                <td style="color: red">建仓大盘点数</td>
+                                <td style="color: red"><?php echo $list['buydpzs']?></td>
                             </tr>
                             <tr>
                                 <th>
@@ -177,7 +102,7 @@
                                 <th>
                                     <span class="line"></span>平仓时间
                                 </th>
-                                <td ><?php echo $list['selltime']?> </td>
+                                <td ><?php echo date('Y-m-d H:m:s',$list['selltime'])?> </td>
                             </tr>
                             <tr>
                                 <th>
@@ -225,19 +150,19 @@
                                 <th>
                                     <span class="line"></span>代理商/经纪人名称
                                 </th>
-                                <td >------ </td>
+                                <td ><?php echo $list['role_name']?> </td>
                             </tr>
                             <tr>
                                 <th>
                                     <span class="line"></span>会员单位ID
                                 </th>
-                                <td >------ </td>
+                                <td ><?php echo $list['id']?></td>
                             </tr>
                             <tr>
                                 <th>
                                     <span class="line"></span>会员单位名称
                                 </th>
-                                <td >------ </td>
+                                <td ><?php echo $list['role_name']?></td>
                             </tr>
                         </thead>
                         
