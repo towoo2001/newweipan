@@ -6,7 +6,7 @@ class  BaseController extends Controller{
 		$admin_id = intval($_SESSION['login']['uid']);
 		if($admin_id > 0){
 			//如果是超级管理员则不需要验证
-			if($_SESSION['admin_id']==285){
+			if($_SESSION['admin_id']==1){
 				return true;
 			}
 			if(CONTROLLER_NAME =='Index'){
