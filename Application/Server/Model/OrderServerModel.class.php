@@ -1,6 +1,7 @@
 <?php
 namespace Server\Model;
 use Think\Model;
+
 /**
 * 
 */
@@ -13,6 +14,7 @@ class OrderServerModel extends Model
 	 */
 	public function seach_list()
 	{
+		
 		
 		$tq = C('DB_PREFIX');
 		$liestr =$tq.'order.buydpzs as buydpzs,'.$tq.'order.paymethod as paymethod,'.$tq.'order.ptitle as ptitle,'.$tq.'order.uid as uid,'.$tq.'order.selltime as selltime,'.$tq.'userinfo.username as username,'.$tq.'order.buytime as buytime,'.$tq.'order.ptitle as ptitle,'.$tq.'order.commission as commission,'.$tq.'order.oid as oid,'.$tq.'order.ploss as ploss,'.$tq.'order.onumber as onumber,'.$tq.'order.ostyle as ostyle,'.$tq.'order.ostaus as ostaus,'.$tq.'order.fee as fee,'.$tq.'order.pid as pid,'.$tq.'order.buyprice as buyprice,'.$tq.'order.sellprice as sellprice,'.$tq.'order.orderno as orderno,'.$tq.'accountinfo.balance as balance,'.$tq.'productinfo.cid as cid,'.$tq.'productinfo.wave as wave';
@@ -78,7 +80,7 @@ class OrderServerModel extends Model
 				$list[$k]['selltime'] = date("Y-m-d H:m:s",$list[$k]['selltime']);
 
 			}
-		
+
 		$list['page'] = $page->show();
 
 
@@ -129,6 +131,7 @@ class OrderServerModel extends Model
 		$uid = $list['uid'];
 		$model = M('userinfo');
 		$info = $model->where('uid='.$uid)->find();//user表信息
+		$info =$this->join($tq.'userinfo on'.$tp.'role.id='.$tp.'userinfo otype','left')->where('uid='.$uid)->select();
 		foreach($info as $k=>$v){
 			$list[$k] = $v;
 				
