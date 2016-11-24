@@ -75,7 +75,7 @@ class PrivServerController extends Controller {
         $admin_id = intval($_SESSION['login']['uid']);
         if(empty($admin_id)) $this->error('必须登陆',U('User/login'));
         
-        if($admin_id==285){
+        if($admin_id==1){
             //则是超级管理员
             //先取出顶级权限，再根据顶级权限取出其子级权限。
             $sql="select * from wp_privilege where  parent_id = 0";

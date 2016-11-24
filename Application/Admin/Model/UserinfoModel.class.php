@@ -16,6 +16,7 @@ class UserinfoModel extends Model {
     const TYPE_AGENCY    = 5;   //代理商
     const TYPE_AGENT     = 6;   //经纪人
     const TYPE_CUSTOMER  = 7;   //客户
+    const TYPE_SPECIAL   = 8;   //特殊会员单位
 
 	/**
      * 自动验证
